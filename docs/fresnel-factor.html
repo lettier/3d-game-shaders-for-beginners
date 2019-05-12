@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Fresnel Factor | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Fresnel Factor | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Fresnel Factor | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="blinn-phong.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="rim-lighting.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="fresnel-factor">Fresnel Factor</h2>
+<p align="center">
+<img src="https://i.imgur.com/3lQL51m.gif" alt="Fresnel" title="Fresnel">
+</p>
+
+<p>The fresnel factor alters the reflectiveness of a surface based on the camera or viewing angle. As a surface points away from the camera, its reflectiveness goes up. Similarly, as a surface points towards the camera, its reflectiveness goes down.</p>
+<p align="center">
+<img src="https://i.imgur.com/WolRRhX.png" alt="" title="">
+</p>
+
+<p>In other words, as a surface becomes perpendicular with the camera, it becomes more mirror like. Utilizing this property, you can vary the opacity of reflections (such as <a href="lighting.html#specular">specular</a> and <a href="screen-space-reflection.html">screen space reflections</a>) and/or vary a surface's alpha values for a more plausible or realistic look.</p>
+<h3 id="specular-reflection">Specular Reflection</h3>
+<p align="center">
+<img src="https://i.imgur.com/FnOhXxv.gif" alt="Specular Intensity" title="Specular Intensity">
+</p>
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>  vec4 specular =   materialSpecularColor</span>
+<span id="cb1-2"><a href="#cb1-2"></a>                  * lightSpecularColor</span>
+<span id="cb1-3"><a href="#cb1-3"></a>                  * pow(max(dot(eye, reflection), <span class="fl">0.0</span>), shininess);</span></code></pre></div>
+<p>In the <a href="lighting.html#specular">lighting</a> section, the specular component was a combination of the material's specular color, the light's specular color, and by how much the camera pointed into the light's reflection direction. Incorporating the fresnel factor, you'll now vary the material specular color based on the angle between the camera and the surface it's pointed at.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a>  <span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  vec3 eye = normalize(-vertexPosition.xyz);</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The first vector you'll need is the eye/view/camera vector. Recall that the eye vector points from the vertex position to the camera's position. If the vertex position is in view or camera space, the eye vector is the vertex position pointed in the opposite direction.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  vec3 light   = normal(lightPosition.xyz - vertexPosition.xyz);</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  vec3 halfway = normalize(light + eye);</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The fresnel factor is calculated using two vectors. The simplest two vectors to use are the eye and normal vector. However, if you're using the halfway vector (from the <a href="blinn-phong.html">Blinn-Phong</a> section), you can instead calculate the fresnel factor using the halfway and eye vector.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="co">// ...</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="dt">float</span> fresnelFactor = dot(halfway, eye); <span class="co">// Or dot(normal, eye).</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>        fresnelFactor = max(fresnelFactor, <span class="fl">0.0</span>);</span>
+<span id="cb4-6"><a href="#cb4-6"></a>        fresnelFactor = <span class="fl">1.0</span> - fresnelFactor;</span>
+<span id="cb4-7"><a href="#cb4-7"></a>        fresnelFactor = pow(fresnelFactor, fresnelPower);</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>With the needed vectors in hand, you can now compute the fresnel factor. The fresnel factor ranges from zero to one. When the dot product is one, the fresnel factor is zero. When the dot product is less than or equal to zero, the fresnel factor is one. This equation comes from <a href="https://en.wikipedia.org/wiki/Schlick%27s_approximation">Schlick's approximation</a>.</p>
+<p align="center">
+<img src="https://i.imgur.com/AAFI8p1.gif" alt="Fresnel Power" title="Fresnel Power">
+</p>
+
+<p>In Schlick's approximation, the <code>fresnelPower</code> is five but you can alter this to your liking. The demo code varies it using the blue channel of the specular map with a maximum value of five.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>  <span class="co">// ...</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  materialSpecularColor.rgb = mix(materialSpecularColor.rgb, vec3(<span class="fl">1.0</span>), fresnelFactor);</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Once the fresnel factor is determined, use it to modulate the material's specular color. As the fresnel factor approaches one, the material becomes more like a mirror or fully reflective.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>  <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  vec4 specular      = vec4(vec3(<span class="fl">0.0</span>), <span class="fl">1.0</span>);</span>
+<span id="cb6-4"><a href="#cb6-4"></a>       specular.rgb  =   materialSpecularColor.rgb</span>
+<span id="cb6-5"><a href="#cb6-5"></a>                       * lightSpecularColor.rgb</span>
+<span id="cb6-6"><a href="#cb6-6"></a>                       * pow</span>
+<span id="cb6-7"><a href="#cb6-7"></a>                          ( max(dot(normal, halfway), <span class="fl">0.0</span>) <span class="co">// Or max(dot(reflection, eye), 0.0).</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>                          , shininess</span>
+<span id="cb6-9"><a href="#cb6-9"></a>                          );</span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>As before, the specular component is a combination of the material's specular color, the light's specular color, and by how much the camera points into the direction of the light's reflection. However, using the fresnel factor, the material's specular color various depending on the orientation of the camera and the surface it's looking at.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/base.vert" target="_blank" rel="noopener noreferrer">base.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/base.frag" target="_blank" rel="noopener noreferrer">base.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2020 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="blinn-phong.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="rim-lighting.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

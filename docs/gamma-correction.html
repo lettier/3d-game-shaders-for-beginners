@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Gamma Correction | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Gamma Correction | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Gamma Correction | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="lookup-table.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="setup.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="gamma-correction">Gamma Correction</h2>
+<p align="center">
+<img src="https://i.imgur.com/IG7A6cj.gif" alt="Gamma Correction" title="Gamma Correction">
+</p>
+
+<p>Correcting for gamma will make your color calculations look correct. This isn't to say they'll look amazing but with gamma correction, you'll find that the colors meld together better, the shadows are more nuanced, and the highlights are more subtle. Without gamma correction, the shadowed areas tend to get crushed while the highlighted areas tend to get blown-out and over saturated making for a harsh contrast overall.</p>
+<p>If you're aiming for realism, gamma correction is especially important. As you perform more and more calculations, the tiny errors add up making it harder to achieve photorealism. The equations will be correct but the inputs and outputs will be wrong leaving you frustrated.</p>
+<p>It's easy to get twisted around when thinking about gamma correction but essentially it boils down to knowing what color space a color is in and how to convert that color to the color space you need. With those two pieces of the puzzle, gamma correction becomes a tedious yet simple chore you'll have to perform from time to time.</p>
+<h3 id="color-spaces">Color Spaces</h3>
+<p align="center">
+<img src="https://i.imgur.com/a1U5oBq.png" alt="sRGB vs RGB" title="sRGB vs RGB">
+</p>
+
+<p>The two color spaces you'll need to be aware of are sRGB (standard Red Green Blue) and RGB or linear color space.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">identify</span> -format <span class="st">&quot;%[colorspace]\n&quot;</span> house-diffuse-srgb.png</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">sRGB</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="ex">identify</span> -format <span class="st">&quot;%[colorspace]\n&quot;</span> house-diffuse-rgb.png</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="ex">RGB</span></span></code></pre></div>
+<p>Knowing what color space a color texture is in will determine how you handle it in your shaders. To determine the color space of a texture, use ImageMagick's <code>identify</code>. You'll find that most textures are in sRGB.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">convert</span> house-diffuse-srgb -colorspace rgb house-diffuse-rgb.png</span></code></pre></div>
+<p>To convert a texture to a particular color space, use ImageMagick's <code>convert</code> program. Notice how a texture is darkened when transforming from sRGB to RGB.</p>
+<h3 id="decoding">Decoding</h3>
+<p>The red, green, and blue values in a sRGB color texture are encoded and cannot be modified directly. Modifying them directly would be like running spellcheck on an encrypted message. Before you can run spellcheck, you first have to decrypt the message. Similarly, to modify the values of an sRGB texture, you first have to decode or transform them to RGB or linear color space.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  color     = texture(color_texture, uv);</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  color.rgb = pow(color.rgb, <span class="fl">2.2</span>);</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To decode a sRGB encoded color, raise the <code>rgb</code> values to the power of <code>2.2</code>. Once you have decoded the color, you are now free to add, subtract, multiply, and divide it.</p>
+<p>By raising the color values to the power of <code>2.2</code>, you're converting them from sRGB to RGB or linear color space. This conversion has the effect of darkening the colors.</p>
+<p align="center">
+<img src="https://i.imgur.com/E5nkRfG.png" alt="Color Darkening" title="Color Darkening">
+</p>
+
+<p>For example, <code>vec3(0.9, 0.2, 0.3)</code> becomes <code>vec3(0.793, 0.028, 0.07)</code>.</p>
+<p align="center">
+<img src="https://i.imgur.com/TOEb0EC.gif" alt="Gamma Curves" title="Gamma Curves">
+</p>
+
+<p>The <code>2.2</code> value is known as gamma. Loosely speaking, gamma can either be <code>1.0 / 2.2</code>, <code>2.2</code>, or <code>1.0</code>. As you've seen, <code>2.2</code> is for decoding sRGB encoded color textures. As you will see, <code>1.0 / 2.2</code> is for encoding linear or RGB color textures. And <code>1.0</code> is RGB or linear color space since <code>y = 1 * x + 0</code> and any base raised to the power of <code>1.0</code> is itself.</p>
+<h4 id="non-color-data">Non-color Data</h4>
+<p align="center">
+<img src="https://i.imgur.com/reA2qjs.png" alt="Non-color Data" title="Non-color Data">
+</p>
+
+<p>One important exception to decoding is when the "colors" of a texture represent non-color data. Some examples of non-color data would be the normals in a normal map, the alpha channel, the heights in a height map, and the directions in a flow map. Only decode color related data or data that represents color. When dealing with non-color data, treat the sRGB color values as RGB or linear and skip the decoding process.</p>
+<h3 id="encoding">Encoding</h3>
+<p align="center">
+<img src="https://i.imgur.com/tRxkKNe.gif" alt="Perceptually versus Actually Linear" title="Perceptually versus Actually Linear">
+</p>
+
+<p>The necessity for encoding and decoding stems from the fact that humans do not perceive lightness linearly and most displays (like a monitor) lack the precision or number of bits to accurately show both lighter and darker tonal values or shades. With only so many bits to go around, colors are encoded in such a way that more bits are devoted to the darker shades than the lighter shades since humans are more sensitive to darker tones than lighter tones. Encoding it this way uses the limited number of bits more effectively for human perception. Still, the only thing to remember is that your display is expecting sRGB encoded values. Therefore, if you decoded a sRGB value, you have to encode it before it makes its way to your display.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>  <span class="co">// ...</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  color     = texture(color_texture, uv);</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  color.rgb = pow(color.rgb, <span class="fl">1.0</span> / <span class="fl">2.2</span>);</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To encode a linear value or convert RGB to sRGB, raise the <code>rgb</code> values to the power of <code>1.0 / 2.2</code>. Notice how <code>1.1 / 2.2</code> is the reciprocal of <code>2.2</code> or <code>2.2 / 1.0</code>. Here you see the symmetry in decoding and encoding.</p>
+<p align="center">
+<img src="https://i.imgur.com/4km0pdv.gif" alt="Not Gamma Corrected versus Gamma Corrected" title="Not Gamma Corrected versus Gamma Corrected">
+</p>
+
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/gamma-correction.frag" target="_blank" rel="noopener noreferrer">gamma-correction.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2020 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="lookup-table.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="setup.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

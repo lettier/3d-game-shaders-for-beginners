@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Film Grain | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Film Grain | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Film Grain | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="dilation.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="lookup-table.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="film-grain">Film Grain</h2>
+<p align="center">
+<img src="https://i.imgur.com/ct7mTv5.gif" alt="Film Grain" title="Film Grain">
+</p>
+
+<p>Film grain (when applied in subtle doses, unlike here) can add a bit of realism you don't notice until it's removed. Typically, it's the imperfections that make a digitally generated image more believable. In terms of the shader graph, film grain is usually the last effect applied before the game is put on screen.</p>
+<h3 id="amount">Amount</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>  <span class="co">// ...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="dt">float</span> amount = <span class="fl">0.1</span>;</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>amount</code> controls how noticeable the film grain is. Crank it up for a snowy picture.</p>
+<h3 id="random-intensity">Random Intensity</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>uniform <span class="dt">float</span> osg_FrameTime;</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="co">//...</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="dt">float</span> toRadians = <span class="fl">3.14</span> / <span class="dv">180</span>;</span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="co">//...</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="dt">float</span> randomIntensity =</span>
+<span id="cb2-12"><a href="#cb2-12"></a>      fract</span>
+<span id="cb2-13"><a href="#cb2-13"></a>        ( <span class="dv">10000</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a>        * sin</span>
+<span id="cb2-15"><a href="#cb2-15"></a>            (</span>
+<span id="cb2-16"><a href="#cb2-16"></a>              ( gl_FragCoord.x</span>
+<span id="cb2-17"><a href="#cb2-17"></a>              + gl_FragCoord.y</span>
+<span id="cb2-18"><a href="#cb2-18"></a>              * osg_FrameTime</span>
+<span id="cb2-19"><a href="#cb2-19"></a>              )</span>
+<span id="cb2-20"><a href="#cb2-20"></a>            * toRadians</span>
+<span id="cb2-21"><a href="#cb2-21"></a>            )</span>
+<span id="cb2-22"><a href="#cb2-22"></a>        );</span>
+<span id="cb2-23"><a href="#cb2-23"></a></span>
+<span id="cb2-24"><a href="#cb2-24"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>This snippet calculates the random intensity needed to adjust the amount.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>Time Since F1 = <span class="bn">00</span> <span class="bn">01</span> <span class="bn">02</span> <span class="bn">03</span> <span class="bn">04</span> <span class="bn">05</span> <span class="bn">06</span> <span class="bn">07</span> <span class="er">08</span> <span class="er">09</span> <span class="dv">10</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>Frame Number  = F1    F3    F4       F5 F6</span>
+<span id="cb3-3"><a href="#cb3-3"></a>osg_FrameTime = <span class="bn">00</span>    <span class="bn">02</span>    <span class="bn">04</span>       <span class="bn">07</span> <span class="er">08</span></span></code></pre></div>
+<p><code>osg_FrameTime</code> is <a href="https://github.com/panda3d/panda3d/blob/daa57733cb9b4ccdb23e28153585e8e20b5ccdb5/panda/src/display/graphicsStateGuardian.cxx#L930">provided</a> by Panda3D. The frame time is a timestamp of how many seconds have passed since the first frame. The example code uses this to animate the film grain as <code>osg_FrameTime</code> will always be different each frame.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a>              <span class="co">// ...</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>              ( gl_FragCoord.x</span>
+<span id="cb4-5"><a href="#cb4-5"></a>              + gl_FragCoord.y</span>
+<span id="cb4-6"><a href="#cb4-6"></a>              * <span class="dv">8009</span> <span class="co">// Large number here.</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a>              <span class="co">// ...</span></span></code></pre></div>
+<p>For static film grain, replace <code>osg_FrameTime</code> with a large number. You may have to try different numbers to avoid seeing any patterns.</p>
+<p align="center">
+<img src="https://i.imgur.com/xqSIMCb.gif" alt="Horizontal, vertical, and diagonal lines." title="Horizontal, vertical, and diagonal lines.">
+</p>
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>        <span class="co">// ...</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>        * sin</span>
+<span id="cb5-4"><a href="#cb5-4"></a>            (</span>
+<span id="cb5-5"><a href="#cb5-5"></a>              ( gl_FragCoord.x</span>
+<span id="cb5-6"><a href="#cb5-6"></a>              + gl_FragCoord.y</span>
+<span id="cb5-7"><a href="#cb5-7"></a>              * someNumber</span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>              <span class="co">// ...</span></span></code></pre></div>
+<p>Both the x and y coordinate are used to create points or specs of film grain. If only x was used, there would only be vertical lines. Similarly, if only y was used, there would be only horizontal lines.</p>
+<p>The reason the snippet multiplies one coordinate by some number is to break up the diagonal symmetry.</p>
+<p align="center">
+<img src="https://i.imgur.com/4UXllmS.gif" alt="Rain" title="Rain">
+</p>
+
+<p>You can of course remove the coordinate multiplier for a somewhat decent looking rain effect. To animate the rain effect, multiply the output of <code>sin</code> by <code>osg_FrameTime</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>              <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>              ( gl_FragCoord.x</span>
+<span id="cb6-4"><a href="#cb6-4"></a>              + gl_FragCoord.y</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>              <span class="co">// ...</span></span></code></pre></div>
+<p>Play around with the x and y coordinate to try and get the rain to change directions. Keep only the x coordinate for a straight downpour.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>input = (gl_FragCoord.x + gl_FragCoord.y * osg_FrameTime) * toRadians</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  frame(<span class="dv">10000</span> * sin(input)) =</span>
+<span id="cb7-3"><a href="#cb7-3"></a>    fract(<span class="dv">10000</span> * sin(<span class="fl">6.977777777777778</span>)) =</span>
+<span id="cb7-4"><a href="#cb7-4"></a>      fract(<span class="dv">10000</span> * <span class="fl">0.6400723818964882</span>) =</span></code></pre></div>
+<p><code>sin</code> is used as a hashing function. The fragment's coordinates are hashed to some output of <code>sin</code>. This has the nice property that no matter the input (big or small), the output range is negative one to one.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a>fract(<span class="dv">10000</span> * sin(<span class="fl">6.977777777777778</span>)) =</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  fract(<span class="dv">10000</span> * <span class="fl">0.6400723818964882</span>) =</span>
+<span id="cb8-3"><a href="#cb8-3"></a>    fract(<span class="fl">6400.723818964882</span>) =</span>
+<span id="cb8-4"><a href="#cb8-4"></a>      <span class="fl">0.723818964882</span></span></code></pre></div>
+<p><code>sin</code> is also used as a pseudo random number generator when combined with <code>fract</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="op">&gt;&gt;&gt;</span> [floor(fract(<span class="dv">4</span>     <span class="op">*</span> sin(x <span class="op">*</span> toRadians)) <span class="op">*</span> <span class="dv">10</span>) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">10</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2"></a>[<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="op">&gt;&gt;&gt;</span> [floor(fract(<span class="dv">10000</span> <span class="op">*</span> sin(x <span class="op">*</span> toRadians)) <span class="op">*</span> <span class="dv">10</span>) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">10</span>)]</span>
+<span id="cb9-5"><a href="#cb9-5"></a>[<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">5</span>]</span></code></pre></div>
+<p>Take a look at the first sequence of numbers and then the second. Each sequence is deterministic but the second sequence has less of a pattern than the first. So while the output of <code>fract(10000 * sin(...))</code> is deterministic, it doesn't have much of a discernible pattern.</p>
+<p align="center">
+<img src="https://i.imgur.com/Mtt8BNg.gif" alt="Increasing the pseudo randomness." title="Increasing the pseudo randomness.">
+</p>
+
+<p>Here you see the <code>sin</code> multiplier going from 1, to 10, to 100, and then to 1000.</p>
+<p>As you increase the <code>sin</code> output multiplier, you get less and less of a pattern. This is the reason the snippet multiplies <code>sin</code> by 10,000.</p>
+<h3 id="fragment-color">Fragment Color</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>  <span class="co">// ...</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  vec2 texSize  = textureSize(colorTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  vec2 texCoord = gl_FragCoord.xy / texSize;</span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  vec4 color = texture(colorTexture, texCoord);</span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Convert the fragment's coordinates to UV coordinates. Using these UV coordinates, look up the texture color for this fragment.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a>    <span class="co">// ...</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>    amount *= randomIntensity;</span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a>    color.rgb += amount;</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Adjust the amount by the random intensity and add this to the color.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a>  <span class="co">// ...</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  fragColor = color;</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Set the fragment color and you're done.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/film-grain.frag" target="_blank" rel="noopener noreferrer">film-grain.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="dilation.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="lookup-table.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>
