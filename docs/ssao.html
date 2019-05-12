@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="SSAO | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="SSAO | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>SSAO | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="bloom.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="motion-blur.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="screen-space-ambient-occlusion-ssao">Screen Space Ambient Occlusion (SSAO)</h2>
+<p align="center">
+<img src="https://i.imgur.com/o7lCukD.gif" alt="SSAO" title="SSAO">
+</p>
+
+<p>SSAO is one of those effects you never knew you needed and can't live without once you have it. It can take a scene from mediocre to wow! For fairly static scenes, you can bake ambient occlusion into a texture but for more dynamic scenes, you'll need a shader. SSAO is one of the more fairly involved shading techniques, but once you pull it off, you'll feel like a shader master.</p>
+<p>By using only a handful of textures, SSAO can approximate the <a href="https://en.wikipedia.org/wiki/Ambient_occlusion">ambient occlusion</a> of a scene. This is faster than trying to compute the ambient occlusion by going through all of the scene's geometry. These handful of textures all originate in screen space giving screen space ambient occlusion its name.</p>
+<h3 id="inputs">Inputs</h3>
+<p>The SSAO shader will need the following inputs.</p>
+<ul>
+<li>Vertex position vectors in view space.</li>
+<li>Vertex normal vectors in view space.</li>
+<li>Sample vectors in tangent space.</li>
+<li>Noise vectors in tangent space.</li>
+<li>The camera lens' projection matrix.</li>
+</ul>
+<h3 id="vertex-positions">Vertex Positions</h3>
+<p align="center">
+<img src="https://i.imgur.com/gr7IxKv.png" alt="Panda3D Vertex Positions" title="Panda3D Vertex Positions">
+</p>
+
+<p>Storing the vertex positions into a framebuffer texture is not a necessity. You can recreate them from the <a href="http://theorangeduck.com/page/pure-depth-ssao">camera's depth buffer</a>. This being a beginners guide, I'll avoid this optimization and keep it straight forward. Feel free to use the depth buffer, however, for your implementation.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb1-1"><a href="#cb1-1"></a>PT(Texture) depthTexture =</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">new</span> Texture(<span class="st">&quot;depthTexture&quot;</span>);</span>
+<span id="cb1-3"><a href="#cb1-3"></a>depthTexture-&gt;set_format</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  ( Texture::Format::F_depth_component32</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  );</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>PT(GraphicsOutput) depthBuffer =</span>
+<span id="cb1-8"><a href="#cb1-8"></a>  graphicsOutput-&gt;make_texture_buffer</span>
+<span id="cb1-9"><a href="#cb1-9"></a>    ( <span class="st">&quot;depthBuffer&quot;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>    , <span class="dv">0</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    , <span class="dv">0</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>    , depthTexture</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    );</span>
+<span id="cb1-14"><a href="#cb1-14"></a>depthBuffer-&gt;set_clear_color</span>
+<span id="cb1-15"><a href="#cb1-15"></a>  ( LVecBase4f(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb1-16"><a href="#cb1-16"></a>  );</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a>NodePath depthCameraNP =</span>
+<span id="cb1-19"><a href="#cb1-19"></a>  window-&gt;make_camera();</span>
+<span id="cb1-20"><a href="#cb1-20"></a>DCAST(Camera, depthCameraNP.node())-&gt;set_lens</span>
+<span id="cb1-21"><a href="#cb1-21"></a>  ( window-&gt;get_camera(<span class="dv">0</span>)-&gt;get_lens()</span>
+<span id="cb1-22"><a href="#cb1-22"></a>  );</span>
+<span id="cb1-23"><a href="#cb1-23"></a>PT(DisplayRegion) depthBufferRegion =</span>
+<span id="cb1-24"><a href="#cb1-24"></a>  depthBuffer-&gt;make_display_region</span>
+<span id="cb1-25"><a href="#cb1-25"></a>    ( <span class="dv">0</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>    , <span class="dv">1</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>    , <span class="dv">0</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>    , <span class="dv">1</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>    );</span>
+<span id="cb1-30"><a href="#cb1-30"></a>depthBufferRegion-&gt;set_camera(depthCameraNP);</span></code></pre></div>
+<p>If you do decide to use the depth buffer, here's how you can set it up using Panda3D.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a>in vec4 vertexPosition;</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>out vec4 fragColor;</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="dt">void</span> main() {</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  fragColor = vertexPosition;</span>
+<span id="cb2-7"><a href="#cb2-7"></a>}</span></code></pre></div>
+<p>Here's the simple shader used to render out the view space vertex positions into a framebuffer texture. The more involved work is setting up the framebuffer texture such that the fragment vector components it receives are not clamped to <code>[0, 1]</code> and that each one has a high enough precision (a high enough number of bits). For example, if a particular interpolated vertex position is <code>&lt;-139.444444566, 0.00000034343, 2.5&gt;</code>, you don't want it stored into the texture as <code>&lt;0.0, 0.0, 1.0&gt;</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  FrameBufferProperties fbp = FrameBufferProperties::get_default();</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="co">// ...</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  fbp.set_rgba_bits(<span class="dv">32</span>, <span class="dv">32</span>, <span class="dv">32</span>, <span class="dv">32</span>);</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  fbp.set_rgb_color(true);</span>
+<span id="cb3-9"><a href="#cb3-9"></a>  fbp.set_float_color(true);</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Here's how the example code sets up the framebuffer texture to store the vertex positions. It wants 32 bits per red, green, blue, and alpha components and disables clamping the values to <code>[0, 1]</code> The <code>set_rgba_bits(32, 32, 32, 32)</code> call sets the bits and also disables the clamping.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>  glTexImage2D</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    ( GL_TEXTURE_2D</span>
+<span id="cb4-3"><a href="#cb4-3"></a>    , <span class="dv">0</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>    , GL_RGB32F</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    , <span class="dv">1200</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>    , <span class="dv">900</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    , <span class="dv">0</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>    , GL_RGB</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    , GL_FLOAT</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    , nullptr</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    );</span></code></pre></div>
+<p>Here's the equivalent OpenGL call. <code>GL_RGB32F</code> sets the bits and also disables the clamping.</p>
+<blockquote>
+If the color buffer is fixed-point, the components of the source and destination
+values and blend factors are each clamped to [0, 1] or [−1, 1] respectively for
+an unsigned normalized or signed normalized color buffer prior to evaluating the blend
+equation.
+If the color buffer is floating-point, no clamping occurs.
+<br>
+<br>
+<footer>
+<a href="https://www.khronos.org/registry/OpenGL/specs/gl/glspec44.core.pdf">Source</a>
+</footer>
+</blockquote>
+
+<p align="center">
+<img src="https://i.imgur.com/V4nETME.png" alt="OpenGL Vertex Positions" title="OpenGL Vertex Positions">
+</p>
+
+<p>Here you see the vertex positions with y being the up vector.</p>
+<p>Recall that Panda3D sets z as the up vector but OpenGL uses y as the up vector. The position shader outputs the vertex positions with z being up since Panda3D was configured with <code>gl-coordinate-system default</code>.</p>
+<h3 id="vertex-normals">Vertex Normals</h3>
+<p align="center">
+<img src="https://i.imgur.com/ilnbkzq.gif" alt="Panda3d Vertex Normals" title="Panda3d Vertex Normals">
+</p>
+
+<p>You'll need the vertex normals to correctly orient the samples you'll take in the SSAO shader. The example code generates multiple sample vectors distributed in a hemisphere but you could use a sphere and do away with the need for normals all together.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>in vec3 vertexNormal;</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>out vec4 fragColor;</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="dt">void</span> main() {</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  vec3 normal = normalize(vertexNormal);</span>
+<span id="cb5-7"><a href="#cb5-7"></a></span>
+<span id="cb5-8"><a href="#cb5-8"></a>  fragColor = vec4(normal, <span class="dv">1</span>);</span>
+<span id="cb5-9"><a href="#cb5-9"></a>}</span></code></pre></div>
+<p>Like the position shader, the normal shader is simple as well. Be sure to normalize the vertex normal and remember that they are in view space.</p>
+<p align="center">
+<img src="https://i.imgur.com/ucdx9Kp.gif" alt="OpenGL Vertex Normals" title="OpenGL Vertex Normals">
+</p>
+
+<p>Here you see the vertex normals with y being the up vector.</p>
+<p>Recall that Panda3D sets z as the up vector but OpenGL uses y as the up vector. The normal shader outputs the vertex positions with z being up since Panda3D was configured with <code>gl-coordinate-system default</code>.</p>
+<p align="center">
+<img src="https://i.imgur.com/fiHXBex.gif" alt="SSAO using the normal maps." title="SSAO using the normal maps.">
+</p>
+
+<p>Here you see SSAO being used with the normal maps instead of the vertex normals. This adds an extra level of detail and will pair nicely with the normal mapped lighting.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>    <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    normal =</span>
+<span id="cb6-4"><a href="#cb6-4"></a>      normalize</span>
+<span id="cb6-5"><a href="#cb6-5"></a>        ( normalTex.rgb</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        * <span class="fl">2.0</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>        - <span class="fl">1.0</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>        );</span>
+<span id="cb6-9"><a href="#cb6-9"></a>    normal =</span>
+<span id="cb6-10"><a href="#cb6-10"></a>      normalize</span>
+<span id="cb6-11"><a href="#cb6-11"></a>        ( mat3</span>
+<span id="cb6-12"><a href="#cb6-12"></a>            ( tangent</span>
+<span id="cb6-13"><a href="#cb6-13"></a>            , binormal</span>
+<span id="cb6-14"><a href="#cb6-14"></a>            , vertexNormal</span>
+<span id="cb6-15"><a href="#cb6-15"></a>            )</span>
+<span id="cb6-16"><a href="#cb6-16"></a>        * normal</span>
+<span id="cb6-17"><a href="#cb6-17"></a>        );</span>
+<span id="cb6-18"><a href="#cb6-18"></a></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>To use the normal maps instead, you'll need to transform the normal mapped normals from tangent space to view space just like you did in the lighting calculations.</p>
+<h3 id="samples">Samples</h3>
+<p>To determine the amount of ambient occlusion for any particular fragment, you'll need to sample the surrounding area. The more samples you use, the better the approximation at the cost of performance.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">// ...</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; numberOfSamples; ++i) {</span>
+<span id="cb7-4"><a href="#cb7-4"></a>    LVecBase3f sample =</span>
+<span id="cb7-5"><a href="#cb7-5"></a>      LVecBase3f</span>
+<span id="cb7-6"><a href="#cb7-6"></a>        ( randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>        , randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>        , randomFloats(generator)</span>
+<span id="cb7-9"><a href="#cb7-9"></a>        ).normalized();</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="dt">float</span> rand = randomFloats(generator);</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    sample[<span class="dv">0</span>] *= rand;</span>
+<span id="cb7-13"><a href="#cb7-13"></a>    sample[<span class="dv">1</span>] *= rand;</span>
+<span id="cb7-14"><a href="#cb7-14"></a>    sample[<span class="dv">2</span>] *= rand;</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="dt">float</span> scale = (<span class="dt">float</span>) i / (<span class="dt">float</span>) numberOfSamples;</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    scale = lerp(<span class="fl">0.1</span>, <span class="fl">1.0</span>, scale * scale);</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    sample[<span class="dv">0</span>] *= scale;</span>
+<span id="cb7-19"><a href="#cb7-19"></a>    sample[<span class="dv">1</span>] *= scale;</span>
+<span id="cb7-20"><a href="#cb7-20"></a>    sample[<span class="dv">2</span>] *= scale;</span>
+<span id="cb7-21"><a href="#cb7-21"></a></span>
+<span id="cb7-22"><a href="#cb7-22"></a>    ssaoSamples.push_back(sample);</span>
+<span id="cb7-23"><a href="#cb7-23"></a>  }</span>
+<span id="cb7-24"><a href="#cb7-24"></a></span>
+<span id="cb7-25"><a href="#cb7-25"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The example code generates a number of random samples distributed in a hemisphere. These <code>ssaoSamples</code> will be sent to the SSAO shader.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><span id="cb8-1"><a href="#cb8-1"></a>    LVecBase3f sample =</span>
+<span id="cb8-2"><a href="#cb8-2"></a>      LVecBase3f</span>
+<span id="cb8-3"><a href="#cb8-3"></a>        ( randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>        , randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a>        , randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>        ).normalized();</span></code></pre></div>
+<p>If you'd like to distribute your samples in a sphere instead, change the random <code>z</code> component to range from negative one to one.</p>
+<h3 id="noise">Noise</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; numberOfNoise; ++i) {</span>
+<span id="cb9-4"><a href="#cb9-4"></a>    LVecBase3f noise =</span>
+<span id="cb9-5"><a href="#cb9-5"></a>      LVecBase3f</span>
+<span id="cb9-6"><a href="#cb9-6"></a>        ( randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>        , randomFloats(generator) * <span class="fl">2.0</span> - <span class="fl">1.0</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>        , <span class="fl">0.0</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a>        );</span>
+<span id="cb9-10"><a href="#cb9-10"></a></span>
+<span id="cb9-11"><a href="#cb9-11"></a>    ssaoNoise.push_back(noise);</span>
+<span id="cb9-12"><a href="#cb9-12"></a>  }</span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To get a good sweep of the sampled area, you'll need to generate some noise vectors. These noise vectors will randomly tilt the hemisphere around the current fragment.</p>
+<h3 id="ambient-occlusion">Ambient Occlusion</h3>
+<p align="center">
+<img src="https://i.imgur.com/KKt74VE.gif" alt="SSAO Texture" title="SSAO Texture">
+</p>
+
+<p>SSAO works by sampling the view space around a fragment. The more samples that are below a surface, the darker the fragment color. These samples are positioned at the fragment and pointed in the general direction of the vertex normal. Each sample is used to look up a position in the position framebuffer texture. The position returned is compared to the sample. If the sample is farther away from the camera than the position, the sample counts towards the fragment being occluded.</p>
+<p align="center">
+<img src="https://i.imgur.com/Nm4CJDN.gif" alt="SSAO Sampling" title="SSAO Sampling">
+</p>
+
+<p>Here you see the space above the surface being sampled for occlusion.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>  <span class="co">// ...</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="dt">float</span> radius    = <span class="dv">1</span>;</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="dt">float</span> bias      = <span class="fl">0.01</span>;</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="dt">float</span> magnitude = <span class="fl">1.5</span>;</span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="dt">float</span> contrast  = <span class="fl">1.5</span>;</span>
+<span id="cb10-7"><a href="#cb10-7"></a></span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Like some of the other techniques, the SSAO shader has a few control knobs you can tweak to get the exact look you're going for. The <code>bias</code> adds to the sample's distance from the camera. You can use the bias to combat "acne". The <code>radius</code> increases or decreases the coverage area of the sample space. The <code>magnitude</code> either lightens or darkens the occlusion map. The <code>contrast</code> either washes out or increases the starkness of the occlusion map.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a>  <span class="co">// ...</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  vec4 position =           texture(positionTexture, texCoord);</span>
+<span id="cb11-4"><a href="#cb11-4"></a>  vec3 normal   = normalize(texture(normalTexture,   texCoord).xyz);</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="dt">int</span>  noiseX = <span class="dt">int</span>(gl_FragCoord.x - <span class="fl">0.5</span>) % <span class="dv">4</span>;</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="dt">int</span>  noiseY = <span class="dt">int</span>(gl_FragCoord.y - <span class="fl">0.5</span>) % <span class="dv">4</span>;</span>
+<span id="cb11-8"><a href="#cb11-8"></a>  vec3 random = noise[noiseX + (noiseY * <span class="dv">4</span>)];</span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Retrieve the position, normal, and random vector for later use. Recall that the example code created a set number of random vectors. The random vector is chosen based on the current fragment's screen position.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a>  <span class="co">// ...</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  vec3 tangent  = normalize(random - normal * dot(random, normal));</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  vec3 binormal = cross(normal, tangent);</span>
+<span id="cb12-5"><a href="#cb12-5"></a>  mat3 tbn      = mat3(tangent, binormal, normal);</span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Using the random and normal vectors, assemble the tangent, binormal, and normal matrix. You'll need this matrix to transform the sample vectors from tangent space to view space.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a>  <span class="co">// ...</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="dt">float</span> occlusion = NUM_SAMPLES;</span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; NUM_SAMPLES; ++i) {</span>
+<span id="cb13-6"><a href="#cb13-6"></a>    <span class="co">// ...</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>  }</span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>With the matrix in hand, the shader can now loop through the samples, subtracting how many are not occluded.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a>    <span class="co">// ...</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>    vec3 samplePosition = tbn * samples[i];</span>
+<span id="cb14-4"><a href="#cb14-4"></a>         samplePosition = position.xyz + samplePosition * radius;</span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Using the matrix, position the sample near the vertex/fragment position and scale it by the radius.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1"></a>    <span class="co">// ...</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>    vec4 offsetUV      = vec4(samplePosition, <span class="fl">1.0</span>);</span>
+<span id="cb15-4"><a href="#cb15-4"></a>         offsetUV      = lensProjection * offsetUV;</span>
+<span id="cb15-5"><a href="#cb15-5"></a>         offsetUV.xyz /= offsetUV.w;</span>
+<span id="cb15-6"><a href="#cb15-6"></a>         offsetUV.xy   = offsetUV.xy * <span class="fl">0.5</span> + <span class="fl">0.5</span>;</span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Using the sample's position in view space, transform it from view space to clip space to UV space.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a>-<span class="dv">1</span> * <span class="fl">0.5</span> + <span class="fl">0.5</span> = <span class="dv">0</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a> <span class="dv">1</span> * <span class="fl">0.5</span> + <span class="fl">0.5</span> = <span class="dv">1</span></span></code></pre></div>
+<p>Recall that clip space components range from negative one to one and that UV coordinates range from zero to one. To transform clip space coordinates to UV coordinates, multiply by one half and add one half.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a>    <span class="co">// ...</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>    vec4 offsetPosition = texture(positionTexture, offsetUV.xy);</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a>    <span class="dt">float</span> occluded = <span class="dv">0</span>;</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="cf">if</span> (samplePosition.y + bias &lt;= offsetPosition.y) { occluded = <span class="dv">0</span>; } <span class="cf">else</span> { occluded = <span class="dv">1</span>; }</span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Using the offset UV coordinates, created by projecting the 3D sample onto the 2D position texture, find the corresponding position vector. This takes you from view space to clip space to UV space back to view space. The shader takes this round trip to find out if some geometry is behind, at, or in front of this sample. If the sample is in front of or at some geometry, this sample doesn't count towards the fragment being occluded. If the sample is behind some geometry, this sample counts towards the fragment being occluded.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a>    <span class="co">// ...</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a>    <span class="dt">float</span> intensity =</span>
+<span id="cb18-4"><a href="#cb18-4"></a>      smoothstep</span>
+<span id="cb18-5"><a href="#cb18-5"></a>        ( <span class="fl">0.0</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a>        , <span class="fl">1.0</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a>        ,   radius</span>
+<span id="cb18-8"><a href="#cb18-8"></a>          / abs(position.y - offsetPosition.y)</span>
+<span id="cb18-9"><a href="#cb18-9"></a>        );</span>
+<span id="cb18-10"><a href="#cb18-10"></a>    occluded *= intensity;</span>
+<span id="cb18-11"><a href="#cb18-11"></a></span>
+<span id="cb18-12"><a href="#cb18-12"></a>    occlusion -= occluded;</span>
+<span id="cb18-13"><a href="#cb18-13"></a></span>
+<span id="cb18-14"><a href="#cb18-14"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Now weight this sampled position by how far it is inside or outside the radius. Finally, subtract this sample from the occlusion factor since it assumes all of the samples are occluded before the loop.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a>    <span class="co">// ...</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a>    occlusion /= NUM_SAMPLES;</span>
+<span id="cb19-4"><a href="#cb19-4"></a></span>
+<span id="cb19-5"><a href="#cb19-5"></a>    <span class="co">// ...</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a>    fragColor = vec4(vec3(occlusion), position.a);</span>
+<span id="cb19-8"><a href="#cb19-8"></a></span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Divide the occluded count by the number of samples to scale the occlusion factor from <code>[0, NUM_SAMPLES]</code> to <code>[0, 1]</code>. Zero means full occlusion and one means no occlusion. Now assign the occlusion factor to the fragment's color and you're done.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a>    <span class="co">// ...</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    fragColor = vec4(vec3(occlusion), position.a);</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>For the demo's purposes, the example code sets the alpha channel to alpha channel of the position framebuffer texture to avoid covering up the background.</p>
+<h3 id="blurring">Blurring</h3>
+<p align="center">
+<img src="https://i.imgur.com/QsqOhFR.gif" alt="SSAO Blur Texture" title="SSAO Blur Texture">
+</p>
+
+<p>The SSAO framebuffer texture is noisy as is. You'll want to blur it to remove the noise. Refer back to the section on <a href="blur.html">blurring</a>. For the best results, use a median or Kuwahara filter to preserve the sharp edges.</p>
+<h3 id="ambient-color">Ambient Color</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a>  <span class="co">// ...</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  vec2 ssaoBlurTexSize  = textureSize(ssaoBlurTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb21-4"><a href="#cb21-4"></a>  vec2 ssaoBlurTexCoord = gl_FragCoord.xy / ssaoBlurTexSize;</span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="dt">float</span> ssao            = texture(ssaoBlurTexture, ssaoBlurTexCoord).r;</span>
+<span id="cb21-6"><a href="#cb21-6"></a></span>
+<span id="cb21-7"><a href="#cb21-7"></a>  vec4 ambient = p3d_Material.ambient * p3d_LightModel.ambient * diffuseTex * ssao;</span>
+<span id="cb21-8"><a href="#cb21-8"></a></span>
+<span id="cb21-9"><a href="#cb21-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The final stop for SSAO is back in the lighting calculation. Here you see the occlusion factor being looked up in the SSAO framebuffer texture and then included in the ambient light calculation.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/base.vert" target="_blank" rel="noopener noreferrer">base.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/base.frag" target="_blank" rel="noopener noreferrer">base.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/position.frag" target="_blank" rel="noopener noreferrer">position.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/normal.frag" target="_blank" rel="noopener noreferrer">normal.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/ssao.frag" target="_blank" rel="noopener noreferrer">ssao.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/median-filter.frag" target="_blank" rel="noopener noreferrer">median-filter.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/kuwahara-filter.frag" target="_blank" rel="noopener noreferrer">kuwahara-filter.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="bloom.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="motion-blur.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

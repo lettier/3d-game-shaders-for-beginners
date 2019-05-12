@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Setup | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Setup | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Setup | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="gamma-correction.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="building-the-demo.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="setup">Setup</h2>
+<p align="center">
+<img src="https://i.imgur.com/fYpIWNk.gif" alt="Setup" title="Setup">
+</p>
+
+<p>Below is the setup used to develop and test the example code.</p>
+<h3 id="environment">Environment</h3>
+<p>The example code was developed and tested using the following environment.</p>
+<ul>
+<li>Linux manjaro 4.9.135-1-MANJARO</li>
+<li>OpenGL renderer string: GeForce GTX 970/PCIe/SSE2</li>
+<li>OpenGL version string: 4.6.0 NVIDIA 410.73</li>
+<li>g++ (GCC) 8.2.1 20180831</li>
+<li>Panda3D 1.10.1-1</li>
+</ul>
+<h3 id="materials">Materials</h3>
+<p>Each <a href="https://blender.org">Blender</a> material used to build <code>mill-scene.egg</code> has five textures in the following order.</p>
+<ul>
+<li>Diffuse</li>
+<li>Normal</li>
+<li>Specular</li>
+<li>Reflection</li>
+<li>Refraction</li>
+</ul>
+<p>By having the same maps in the same positions for all models, the shaders can be generalized, reducing the need to duplicate code.</p>
+<p>If an object uses its vertex normals, a "flat blue" normal map is used.</p>
+<p align="center">
+<img src="https://i.imgur.com/tFmKgoH.png" alt="A flat normal map." title="A flat normal map.">
+</p>
+
+<p>Here is an example of a flat normal map. The only color it contains is flat blue <code>(red = 128, green = 128, blue = 255)</code>. This color represents a unit (length one) normal pointing in the positive z-axis <code>(0, 0, 1)</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>) =</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  ( round((<span class="dv">0</span> * <span class="fl">0.5</span> + <span class="fl">0.5</span>) * <span class="dv">255</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  , round((<span class="dv">0</span> * <span class="fl">0.5</span> + <span class="fl">0.5</span>) * <span class="dv">255</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  , round((<span class="dv">1</span> * <span class="fl">0.5</span> + <span class="fl">0.5</span>) * <span class="dv">255</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  ) =</span>
+<span id="cb1-6"><a href="#cb1-6"></a>    (<span class="dv">128</span>, <span class="dv">128</span>, <span class="dv">255</span>) =</span>
+<span id="cb1-7"><a href="#cb1-7"></a>      ( round(<span class="dv">128</span> / <span class="dv">255</span> * <span class="dv">2</span> - <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>      , round(<span class="dv">128</span> / <span class="dv">255</span> * <span class="dv">2</span> - <span class="dv">1</span>)</span>
+<span id="cb1-9"><a href="#cb1-9"></a>      , round(<span class="dv">255</span> / <span class="dv">255</span> * <span class="dv">2</span> - <span class="dv">1</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a>      ) =</span>
+<span id="cb1-11"><a href="#cb1-11"></a>        (<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div>
+<p>Here you see the unit normal <code>(0, 0, 1)</code> converted to flat blue <code>(128, 128, 255)</code> and flat blue converted to the unit normal. You'll learn more about this in the <a href="normal-mapping.html">normal mapping</a> technique.</p>
+<p align="center">
+<img src="https://i.imgur.com/R9FgZKx.png" alt="Specular Map" title="Specular Map">
+</p>
+
+<p>Up above is one of the specular maps used. The red and blue channel work to control the amount of specular reflection seen based on the camera angle. The green channel controls the shininess factor. You'll learn more about this in the <a href="lighting.html">lighting</a> and <a href="fresnel-factor.html">fresnel factor</a> sections.</p>
+<p>The reflection and refraction textures mask off the objects that are either reflective, refractive, or both. For the reflection texture, the red channel controls the amount of reflection and the green channel controls how clear or blurry the reflection is.</p>
+<h3 id="panda3d">Panda3D</h3>
+<p>The example code uses <a href="https://www.panda3d.org/">Panda3D</a> as the glue between the shaders. This has no real influence over the techniques below, meaning you'll be able to take what you learn here and apply it to your stack or game engine of choice. Panda3D does provide some conveniences. I have pointed these out so you can either find an equivalent convenience provided by your stack or replicate it yourself, if your stack doesn't provide something equivalent.</p>
+<p>Three Panda3D configurations were changed for the purposes of the demo program. You can find these in <a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/config.prc">config.prc</a>. The configurations changed were <code>gl-coordinate-system default</code>, <code>textures-power-2 down</code>, and <code>textures-auto-power-2 1</code>. Refer to the <a href="http://www.panda3d.org/manual/?title=Configuring_Panda3D" target="_blank" rel="noopener noreferrer">Panda3D configuration</a> page in the manual for more details.</p>
+<p>Panda3D defaults to a z-up, right-handed coordinate system while OpenGL uses a y-up, right-handed system. <code>gl-coordinate-system default</code> keeps you from having to translate between the two inside your shaders. <code>textures-auto-power-2 1</code> allows us to use texture sizes that are not a power of two if the system supports it. This comes in handy when doing SSAO and other screen/window sized related techniques since the screen/window size is usually not a power of two. <code>textures-power-2 down</code> downsizes our textures to a power of two if the system only supports texture sizes being a power of two.</p>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="gamma-correction.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="building-the-demo.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

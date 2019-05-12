@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$lang$" xml:lang="$lang$"$if(dir)$ dir="$dir$"$endif$>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+$for(author-meta)$
+    <meta name="author" content="$author-meta$" />
+$endfor$
+$if(date-meta)$
+    <meta name="dcterms.date" content="$date-meta$" />
+$endif$
+$if(keywords)$
+    <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$" />
+$endif$
+    <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+$if(quotes)$
+      q { quotes: "“" "”" "‘" "’"; }
+$endif$
+    </style>
+$if(highlighting-css)$
+    <style>
+      $highlighting-css$
+    </style>
+$endif$
+$if(math)$
+  $math$
+$endif$
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+$for(header-includes)$
+  $header-includes$
+$endfor$
+$for(css)$
+    <link rel="stylesheet" href="$css$" />
+$endfor$
+  </head>
+  <body>
+$for(include-before)$
+    $include-before$
+$endfor$
+$if(title)$
+    <header id="title-block-header">
+    <h1 class="title">$title$</h1>
+$if(subtitle)$
+    <p class="subtitle">$subtitle$</p>
+$endif$
+$for(author)$
+    <p class="author">$author$</p>
+$endfor$
+$if(date)$
+    <p class="date">$date$</p>
+$endif$
+    </header>
+$endif$
+$if(toc)$
+    <nav id="$idprefix$TOC" role="doc-toc">
+$table-of-contents$
+    </nav>
+$endif$
+$body$
+$for(include-after)$
+    $include-after$
+$endfor$
+  </body>
+</html>

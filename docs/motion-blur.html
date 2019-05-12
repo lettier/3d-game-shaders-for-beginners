@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Motion Blur | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Motion Blur | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Motion Blur | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="ssao.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="screen-space-reflection.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="motion-blur">Motion Blur</h2>
+<p align="center">
+<img src="https://i.imgur.com/eTnhpLr.gif" alt="Motion Blur" title="Motion Blur">
+</p>
+
+<p>To really sell the illusion of speed, you can do no better than motion blur. From high speed car chases to moving at warp speed, motion blur greatly improves the look and feel of fast moving objects.</p>
+<p>There are a few ways to implement motion blur as a screen space technique. The less involved implementation will only blur the scene in relation to the camera's movements while the more involved version will blur any moving objects even with the camera remaining still. The less involved technique is described below but the principle is the same.</p>
+<h3 id="textures">Textures</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>uniform sampler2D positionTexture;</span>
+<span id="cb1-2"><a href="#cb1-2"></a>uniform sampler2D colorTexture;</span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">// ...</span></span></code></pre></div>
+<p>The input textures needed are the vertex positions in view space and the scene's colors. Refer back to <a href="ssao.html#vertex-positions">SSAO</a> for acquiring the vertex positions.</p>
+<h3 id="matrices">Matrices</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>uniform mat4 previousViewWorldMat;</span>
+<span id="cb2-4"><a href="#cb2-4"></a>uniform mat4 worldViewMat;</span>
+<span id="cb2-5"><a href="#cb2-5"></a>uniform mat4 lensProjection;</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co">// ...</span></span></code></pre></div>
+<p>The motion blur technique determines the blur direction by comparing the previous frame's vertex positions with the current frame's vertex positions. To do this, you'll need the previous frame's view-to-world matrix, the current frame's world-to-view matrix, and the camera lens' projection matrix.</p>
+<h3 id="parameters">Parameters</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>uniform vec2 parameters;</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">// ...</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="dt">void</span> main() {</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="dt">int</span>   size       = <span class="dt">int</span>(parameters.x);</span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="dt">float</span> separation =     parameters.y;</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co">// ...</span></span></code></pre></div>
+<p>The adjustable parameters are <code>size</code> and <code>separation</code>. <code>size</code> controls how many samples are taken along the blur direction. Increasing <code>size</code> increases the amount of blur at the cost of performance. <code>separation</code> controls how spread out the samples are along the blur direction. Increasing <code>separation</code> increases the amount of blur at the cost of accuracy.</p>
+<h3 id="blur-direction">Blur Direction</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>  <span class="co">// ...</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  vec2 texSize  = textureSize(colorTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  vec2 texCoord = gl_FragCoord.xy / texSize;</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  vec4 position1 = texture(positionTexture, texCoord);</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  vec4 position0 = worldViewMat * previousViewWorldMat * position1;</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To determine which way to blur this fragment, you'll need to know where things were last frame and where things are this frame. To figure out where things are now, sample the current vertex position. To figure out where things were last frame, transform the current position from view space to world space, using the previous frame's view-to-world matrix, and then transform it back to view space from world space using this frame's world-to-view matrix. This transformed position is this fragment's previous interpolated vertex position.</p>
+<p align="center">
+<img src="https://i.imgur.com/oQqdxM9.gif" alt="Position Projection" title="Position Projection">
+</p>
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>  <span class="co">// ...</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  position0      = lensProjection * position0;</span>
+<span id="cb5-4"><a href="#cb5-4"></a>  position0.xyz /= position0.w;</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  position0.xy   = position0.xy * <span class="fl">0.5</span> + <span class="fl">0.5</span>;</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  position1      = lensProjection * position1;</span>
+<span id="cb5-8"><a href="#cb5-8"></a>  position1.xyz /= position1.w;</span>
+<span id="cb5-9"><a href="#cb5-9"></a>  position1.xy   = position1.xy * <span class="fl">0.5</span> + <span class="fl">0.5</span>;</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Now that you have the current and previous positions, transform them to screen space. With the positions in screen space, you can trace out the 2D direction you'll need to blur the onscreen image.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>  <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="co">//   position1.xy = position0.xy + direction;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  vec2 direction    = position1.xy - position0.xy;</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="cf">if</span> (length(direction) &lt;= <span class="fl">0.0</span>) { <span class="cf">return</span>; }</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The blur direction goes from the previous position to the current position.</p>
+<h3 id="blurring">Blurring</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">// ...</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  fragColor = texture(colorTexture, texCoord);</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Sample the current fragment's color. This will be the first of the colors blurred together.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a>  <span class="co">// ...</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  direction.xy *= separation;</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Multiply the direction vector by the separation.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  vec2  forward  = texCoord;</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  vec2  backward = texCoord;</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>For a more seamless blur, sample in the direction of the blur and in the opposite direction of the blur. For now, set the two vectors to the fragment's UV coordinate.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>  <span class="co">// ...</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="dt">float</span> count = <span class="fl">1.0</span>;</span>
+<span id="cb10-4"><a href="#cb10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p><code>count</code> is used to average all of the samples taken. It starts at one since you've already sampled the current fragment's color.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a>  <span class="co">// ...</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; size; ++i) {</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    forward  += direction;</span>
+<span id="cb11-5"><a href="#cb11-5"></a>    backward -= direction;</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a>    fragColor +=</span>
+<span id="cb11-8"><a href="#cb11-8"></a>      texture</span>
+<span id="cb11-9"><a href="#cb11-9"></a>        ( colorTexture</span>
+<span id="cb11-10"><a href="#cb11-10"></a>        , forward</span>
+<span id="cb11-11"><a href="#cb11-11"></a>        );</span>
+<span id="cb11-12"><a href="#cb11-12"></a>    fragColor +=</span>
+<span id="cb11-13"><a href="#cb11-13"></a>      texture</span>
+<span id="cb11-14"><a href="#cb11-14"></a>        ( colorTexture</span>
+<span id="cb11-15"><a href="#cb11-15"></a>        , backward</span>
+<span id="cb11-16"><a href="#cb11-16"></a>        );</span>
+<span id="cb11-17"><a href="#cb11-17"></a></span>
+<span id="cb11-18"><a href="#cb11-18"></a>    count += <span class="fl">2.0</span>;</span>
+<span id="cb11-19"><a href="#cb11-19"></a>  }</span>
+<span id="cb11-20"><a href="#cb11-20"></a></span>
+<span id="cb11-21"><a href="#cb11-21"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Sample the screen's colors both in the forward and backward direction of the blur. Be sure to add these samples together as you travel along.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a>  <span class="co">// ...</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  fragColor /= count;</span>
+<span id="cb12-4"><a href="#cb12-4"></a>}</span></code></pre></div>
+<p>The final fragment color is the average color of the samples taken.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/position.frag" target="_blank" rel="noopener noreferrer">position.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/motion-blur.frag" target="_blank" rel="noopener noreferrer">motion-blur.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2020 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="ssao.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="screen-space-reflection.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

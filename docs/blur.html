@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Blur | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Blur | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Blur | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="fog.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="bloom.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="blur">Blur</h2>
+<p align="center">
+<img src="https://i.imgur.com/b5vw2AJ.gif" alt="Kuwahara Filter" title="Kuwahara Filter">
+</p>
+
+<p>The need to blur this or that can come up quite often as you try to obtain a particular look or perform some technique like motion blur. Below are just some of ways you can blur your game's imagery.</p>
+<h3 id="box-blur">Box Blur</h3>
+<p align="center">
+<img src="https://i.imgur.com/uaXC1JM.gif" alt="Box Blur" title="Box Blur">
+</p>
+
+<p>The box blur or mean filter algorithm is a simple to implement blurring effect. It's fast and gets the job done. If you need more finesse, you can upgrade to a Gaussian blur.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>  <span class="co">// ...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  vec2 texSize  = textureSize(colorTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  vec2 texCoord = gl_FragCoord.xy / texSize;</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">int</span> size  = <span class="dt">int</span>(parameters.x);</span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="cf">if</span> (size &lt;= <span class="dv">0</span>) { fragColor = texture(colorTexture, texCoord); <span class="cf">return</span>; }</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>size</code> parameter controls how blurry the result is. If the <code>size</code> is zero or less, return the fragment untouched.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a>  <span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">float</span> separation = parameters.y;</span>
+<span id="cb2-4"><a href="#cb2-4"></a>        separation = max(separation, <span class="dv">1</span>);</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>separation</code> parameter spreads out the blur without having to sample additional fragments. <code>separation</code> ranges from one to infinity.</p>
+<p align="center">
+<img src="https://i.imgur.com/bRw0OkX.png" alt="Blur Kernel" title="Blur Kernel">
+</p>
+
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = -size; i &lt;= size; ++i) {</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = -size; j &lt;= size; ++j) {</span>
+<span id="cb3-5"><a href="#cb3-5"></a>      <span class="co">// ...</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>    }</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  }</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Like the <a href="outlining.html">outlining</a> technique, the box blur technique uses a kernel/matrix/window centered around the current fragment. The size of the window is <code>size * 2 + 1</code> by <code>size * 2 + 1</code>. So for example, with a <code>size</code> setting of two, the window uses <code>(2 * 2 + 1)^2 = 25</code> samples per fragment.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>      <span class="co">// ...</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>      fragColor +=</span>
+<span id="cb4-4"><a href="#cb4-4"></a>        texture</span>
+<span id="cb4-5"><a href="#cb4-5"></a>          ( colorTexture</span>
+<span id="cb4-6"><a href="#cb4-6"></a>          ,   ( gl_FragCoord.xy</span>
+<span id="cb4-7"><a href="#cb4-7"></a>              + (vec2(i, j) * separation)</span>
+<span id="cb4-8"><a href="#cb4-8"></a>              )</span>
+<span id="cb4-9"><a href="#cb4-9"></a>            / texSize</span>
+<span id="cb4-10"><a href="#cb4-10"></a>          );</span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a>      <span class="co">// ...</span></span></code></pre></div>
+<p>To compute the mean or average of the samples in the window, start by loop through the window, adding up each color vector.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>  <span class="co">// ...</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  fragColor /= pow(size * <span class="dv">2</span> + <span class="dv">1</span>, <span class="dv">2</span>);</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To finish computing the mean, divide the sum of the colors sampled by the number of samples taken. The final fragment color is the mean or average of the fragments sampled inside the window.</p>
+<h3 id="median-filter">Median Filter</h3>
+<p align="center">
+<img src="https://i.imgur.com/T1nEEn3.gif" alt="Median Filter" title="Median Filter">
+</p>
+
+<p>The box blur uses the mean color of the samples taken. The median filter uses the median color of the samples taken. By using the median instead of the mean, the edges in the image are preserved—meaning the edges stay nice and crisp. For example, look at the windows in the box blurred image versus the median filtered image.</p>
+<p>Unfortunately, finding the median can be slower than finding the mean. You could sort the values and choose the middle one but that would take at least quasilinear time. There is a technique to find the median in linear time but it can be quite awkward inside a shader. The numerical approach below approximates the median in linear time. How well it approximates the median can be controlled.</p>
+<p align="center">
+<img src="https://i.imgur.com/AnbzUmN.png" alt="Painterly" title="Painterly">
+</p>
+
+<p>At lower quality approximations, you end up with a nice <a href="https://en.wikipedia.org/wiki/Painterliness">painterly</a> look.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="pp">#define MAX_SIZE        4</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="pp">#define MAX_KERNEL_SIZE ((MAX_SIZE * 2 + 1) * (MAX_SIZE * 2 + 1))</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="pp">#define MAX_BINS_SIZE   100</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co">// ...</span></span></code></pre></div>
+<p>These are the hard limits for the <code>size</code> parameter, window size, and <code>bins</code> array.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">// ...</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  vec2 texSize  = textureSize(colorTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  vec2 texCoord = gl_FragCoord.xy / texSize;</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="dt">int</span> size = <span class="dt">int</span>(parameters.x);</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="cf">if</span> (size &lt;= <span class="dv">0</span>) { fragColor = texture(colorTexture, texCoord); <span class="cf">return</span>; }</span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="cf">if</span> (size &gt; MAX_SIZE) { size = MAX_SIZE; }</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="dt">int</span> kernelSize = <span class="dt">int</span>(pow(size * <span class="dv">2</span> + <span class="dv">1</span>, <span class="dv">2</span>));</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>size</code> parameter controls how blurry or smeared the effect is. If the size is at or below zero, return the current fragment untouched. From the <code>size</code> parameter, calculate the total size of the kernel or window. This is how many samples you'll be taking per fragment.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a>  <span class="co">// ...</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="dt">int</span> binsSize = <span class="dt">int</span>(parameters.y);</span>
+<span id="cb8-4"><a href="#cb8-4"></a>      binsSize = clamp(binsSize, <span class="dv">1</span>, MAX_BINS_SIZE);</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Set up the <code>binsSize</code>, making sure to limit it by the <code>MAX_BINS_SIZE</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="dt">int</span> i        = <span class="dv">0</span>;</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="dt">int</span> j        = <span class="dv">0</span>;</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="dt">int</span> count    = <span class="dv">0</span>;</span>
+<span id="cb9-6"><a href="#cb9-6"></a>  <span class="dt">int</span> binIndex = <span class="dv">0</span>;</span>
+<span id="cb9-7"><a href="#cb9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p><code>i</code> and <code>j</code> are used to sample the given texture around the current fragment. <code>i</code> is also used as a general for loop count. <code>count</code> is used in the initialization of the <code>colors</code> array which you'll see later. <code>binIndex</code> is used to approximate the median color.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>  <span class="co">// ...</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  vec4  colors[MAX_KERNEL_SIZE];</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="dt">float</span> bins[MAX_BINS_SIZE];</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="dt">int</span>   binIndexes[colors.length()];</span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>colors</code> array holds the sampled colors taken from the input texture. <code>bins</code> is used to approximate the median of the sampled colors. Each bin holds a count of how many colors fall into its range when converting each color into a greyscale value (between zero and one). As <code>binsSize</code> approaches 100, the algorithm finds the true median almost always. <code>binIndexes</code> stores the <code>bins</code> index or which bin each sample falls into.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a>  <span class="co">// ...</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="dt">float</span> total = <span class="dv">0</span>;</span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="dt">float</span> limit = floor(<span class="dt">float</span>(kernelSize) / <span class="dv">2</span>) + <span class="dv">1</span>;</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p><code>total</code> keeps track of how many colors you've come across as you loop through <code>bins</code>. When <code>total</code> reaches <code>limit</code>, you return whatever <code>bins</code> index you're at. The <code>limit</code> is the median index. For example, if the window size is 81, <code>limit</code> is 41 which is directly in the middle (40 samples below and 40 samples above).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a>  <span class="co">// ...</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="dt">float</span> value       = <span class="dv">0</span>;</span>
+<span id="cb12-4"><a href="#cb12-4"></a>  vec3  valueRatios = vec3(<span class="fl">0.3</span>, <span class="fl">0.59</span>, <span class="fl">0.11</span>);</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>These are used to covert and hold each color sample's greyscale value. Instead of dividing red, green, and blue by one third, it uses 30% of red, 59% of green, and 11% of blue for a total of 100%.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a>  <span class="co">// ...</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="cf">for</span> (i = -size; i &lt;= size; ++i) {</span>
+<span id="cb13-4"><a href="#cb13-4"></a>    <span class="cf">for</span> (j = -size; j &lt;= size; ++j) {</span>
+<span id="cb13-5"><a href="#cb13-5"></a>      colors[count] =</span>
+<span id="cb13-6"><a href="#cb13-6"></a>        texture</span>
+<span id="cb13-7"><a href="#cb13-7"></a>          ( colorTexture</span>
+<span id="cb13-8"><a href="#cb13-8"></a>          ,   ( gl_FragCoord.xy</span>
+<span id="cb13-9"><a href="#cb13-9"></a>              + vec2(i, j)</span>
+<span id="cb13-10"><a href="#cb13-10"></a>              )</span>
+<span id="cb13-11"><a href="#cb13-11"></a>            / texSize</span>
+<span id="cb13-12"><a href="#cb13-12"></a>          );</span>
+<span id="cb13-13"><a href="#cb13-13"></a>      count += <span class="dv">1</span>;</span>
+<span id="cb13-14"><a href="#cb13-14"></a>    }</span>
+<span id="cb13-15"><a href="#cb13-15"></a>  }</span>
+<span id="cb13-16"><a href="#cb13-16"></a></span>
+<span id="cb13-17"><a href="#cb13-17"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Loop through the window and collect the color samples into <code>colors</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a>  <span class="co">// ...</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; binsSize; ++i) {</span>
+<span id="cb14-4"><a href="#cb14-4"></a>    bins[i] = <span class="dv">0</span>;</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  }</span>
+<span id="cb14-6"><a href="#cb14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Initialize the <code>bins</code> array with zeros.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1"></a>  <span class="co">// ...</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; kernelSize; ++i) {</span>
+<span id="cb15-4"><a href="#cb15-4"></a>    value           = dot(colors[i].rgb, valueRatios);</span>
+<span id="cb15-5"><a href="#cb15-5"></a>    binIndex        = <span class="dt">int</span>(floor(value * binsSize));</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    binIndex        = clamp(binIndex, <span class="dv">0</span>, binsSize - <span class="dv">1</span>);</span>
+<span id="cb15-7"><a href="#cb15-7"></a>    bins[binIndex] += <span class="dv">1</span>;</span>
+<span id="cb15-8"><a href="#cb15-8"></a>    binIndexes[i]   = binIndex;</span>
+<span id="cb15-9"><a href="#cb15-9"></a>  }</span>
+<span id="cb15-10"><a href="#cb15-10"></a></span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Loop through the colors and convert each one to a greyscale value. <code>dot(colors[i].rgb, valueRatios)</code> is the weighted sum <code>colors.r * 0.3 + colors.g * 0.59 + colors.b * 0.11</code>.</p>
+<p>Each value will fall into some bin. Each bin covers some range of values. For example, if the number of bins is 10, the first bin covers everything from zero up to but not including 0.1. Increment the number of colors that fall into this bin and remember the color sample's bin index so you can look it up later.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a>  <span class="co">// ...</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  binIndex = <span class="dv">0</span>;</span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; binsSize; ++i) {</span>
+<span id="cb16-6"><a href="#cb16-6"></a>    total += bins[i];</span>
+<span id="cb16-7"><a href="#cb16-7"></a>    <span class="cf">if</span> (total &gt;= limit) {</span>
+<span id="cb16-8"><a href="#cb16-8"></a>      binIndex = i;</span>
+<span id="cb16-9"><a href="#cb16-9"></a>      <span class="cf">break</span>;</span>
+<span id="cb16-10"><a href="#cb16-10"></a>    }</span>
+<span id="cb16-11"><a href="#cb16-11"></a>  }</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Loop through the bins, tallying up the number of colors seen so far. When you reach the median index, exit the loop and remember the last <code>bins</code> index reached.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a>  <span class="co">// ...</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  fragColor = colors[<span class="dv">0</span>];</span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; kernelSize; ++i) {</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="cf">if</span> (binIndexes[i] == binIndex) {</span>
+<span id="cb17-7"><a href="#cb17-7"></a>      fragColor = colors[i];</span>
+<span id="cb17-8"><a href="#cb17-8"></a>      <span class="cf">break</span>;</span>
+<span id="cb17-9"><a href="#cb17-9"></a>    }</span>
+<span id="cb17-10"><a href="#cb17-10"></a>  }</span>
+<span id="cb17-11"><a href="#cb17-11"></a></span>
+<span id="cb17-12"><a href="#cb17-12"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Now loop through the <code>binIndexes</code> and find the first color with the last <code>bins</code> indexed reached. Its greyscale value is the approximated median which in many cases will be the true median value. Set this color as the fragColor and exit the loop and shader.</p>
+<h3 id="kuwahara-filter">Kuwahara Filter</h3>
+<p align="center">
+<img src="https://i.imgur.com/b5vw2AJ.gif" alt="Kuwahara Filter" title="Kuwahara Filter">
+</p>
+
+<p>Like the median filter, the kuwahara filter preserves the major edges found in the image. You'll notice that it has a more block like or chunky pattern to it. In practice, the Kuwahara filter runs faster than the median filter, allowing for larger <code>size</code> values without a noticeable slowdown.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">// ...</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="pp">#define MAX_SIZE        5</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="pp">#define MAX_KERNEL_SIZE ((MAX_SIZE * 2 + 1) * (MAX_SIZE * 2 + 1))</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Set a hard limit for the <code>size</code> parameter and the number of samples taken.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// ...</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="dt">int</span> i     = <span class="dv">0</span>;</span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="dt">int</span> j     = <span class="dv">0</span>;</span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="dt">int</span> count = <span class="dv">0</span>;</span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="co">// ...</span></span></code></pre></div>
+<p>These are used to sample the input texture and set up the <code>values</code> array.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">// ...</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>vec3  valueRatios = vec3(<span class="fl">0.3</span>, <span class="fl">0.59</span>, <span class="fl">0.11</span>);</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Like the median filter, you'll be converting the color samples into greyscale values.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">// ...</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="dt">float</span> values[MAX_KERNEL_SIZE];</span>
+<span id="cb21-4"><a href="#cb21-4"></a></span>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Initialize the <code>values</code> array. This will hold the greyscale values for the color samples.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a><span class="co">// ...</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>vec4  color       = vec4(<span class="dv">0</span>);</span>
+<span id="cb22-4"><a href="#cb22-4"></a>vec4  meanTemp    = vec4(<span class="dv">0</span>);</span>
+<span id="cb22-5"><a href="#cb22-5"></a>vec4  mean        = vec4(<span class="dv">0</span>);</span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="dt">float</span> valueMean   = <span class="dv">0</span>;</span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="dt">float</span> variance    = <span class="dv">0</span>;</span>
+<span id="cb22-8"><a href="#cb22-8"></a><span class="dt">float</span> minVariance = -<span class="dv">1</span>;</span>
+<span id="cb22-9"><a href="#cb22-9"></a></span>
+<span id="cb22-10"><a href="#cb22-10"></a><span class="co">// ...</span></span></code></pre></div>
+<p>The Kuwahara filter works by computing the variance of four subwindows and then using the mean of the subwindow with the smallest variance.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a><span class="co">// ...</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="dt">void</span> findMean(<span class="dt">int</span> i0, <span class="dt">int</span> i1, <span class="dt">int</span> j0, <span class="dt">int</span> j1) {</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a><span class="co">// ...</span></span></code></pre></div>
+<p><code>findMean</code> is a function defined outside of <code>main</code>. Each run of <code>findMean</code> will remember the mean of the given subwindow that has the lowest variance seen so far.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a>  <span class="co">// ...</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  meanTemp = vec4(<span class="dv">0</span>);</span>
+<span id="cb24-4"><a href="#cb24-4"></a>  count    = <span class="dv">0</span>;</span>
+<span id="cb24-5"><a href="#cb24-5"></a></span>
+<span id="cb24-6"><a href="#cb24-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Make sure to reset <code>count</code> and <code>meanTemp</code> before computing the mean of the given subwindow.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a>  <span class="co">// ...</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="cf">for</span> (i = i0; i &lt;= i1; ++i) {</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="cf">for</span> (j = j0; j &lt;= j1; ++j) {</span>
+<span id="cb25-5"><a href="#cb25-5"></a>      color  =</span>
+<span id="cb25-6"><a href="#cb25-6"></a>        texture</span>
+<span id="cb25-7"><a href="#cb25-7"></a>          ( colorTexture</span>
+<span id="cb25-8"><a href="#cb25-8"></a>          ,   (gl_FragCoord.xy + vec2(i, j))</span>
+<span id="cb25-9"><a href="#cb25-9"></a>            / texSize</span>
+<span id="cb25-10"><a href="#cb25-10"></a>          );</span>
+<span id="cb25-11"><a href="#cb25-11"></a></span>
+<span id="cb25-12"><a href="#cb25-12"></a>      meanTemp += color;</span>
+<span id="cb25-13"><a href="#cb25-13"></a></span>
+<span id="cb25-14"><a href="#cb25-14"></a>      values[count] = dot(color.rgb, valueRatios);</span>
+<span id="cb25-15"><a href="#cb25-15"></a></span>
+<span id="cb25-16"><a href="#cb25-16"></a>      count += <span class="dv">1</span>;</span>
+<span id="cb25-17"><a href="#cb25-17"></a>    }</span>
+<span id="cb25-18"><a href="#cb25-18"></a>  }</span>
+<span id="cb25-19"><a href="#cb25-19"></a></span>
+<span id="cb25-20"><a href="#cb25-20"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Similar to the box blur, loop through the given subwindow and add up each color. At the same time, make sure to store the greyscale value for this sample in <code>values</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1"></a>  <span class="co">// ...</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a>  meanTemp.rgb /= count;</span>
+<span id="cb26-4"><a href="#cb26-4"></a>  valueMean     = dot(meanTemp.rgb, valueRatios);</span>
+<span id="cb26-5"><a href="#cb26-5"></a></span>
+<span id="cb26-6"><a href="#cb26-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To compute the mean, divide the samples sum by the number of samples taken. Calculate the greyscale value for the mean.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a>  <span class="co">// ...</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; count; ++i) {</span>
+<span id="cb27-4"><a href="#cb27-4"></a>    variance += pow(values[i] - valueMean, <span class="dv">2</span>);</span>
+<span id="cb27-5"><a href="#cb27-5"></a>  }</span>
+<span id="cb27-6"><a href="#cb27-6"></a></span>
+<span id="cb27-7"><a href="#cb27-7"></a>  variance /= count;</span>
+<span id="cb27-8"><a href="#cb27-8"></a></span>
+<span id="cb27-9"><a href="#cb27-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Now calculate the variance for this given subwindow. The variance is the average squared difference between each sample's greyscale value the mean greyscale value.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1"></a>  <span class="co">// ...</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="cf">if</span> (variance &lt; minVariance || minVariance &lt;= -<span class="dv">1</span>) {</span>
+<span id="cb28-4"><a href="#cb28-4"></a>    mean = meanTemp;</span>
+<span id="cb28-5"><a href="#cb28-5"></a>    minVariance = variance;</span>
+<span id="cb28-6"><a href="#cb28-6"></a>  }</span>
+<span id="cb28-7"><a href="#cb28-7"></a>}</span>
+<span id="cb28-8"><a href="#cb28-8"></a></span>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="co">// ...</span></span></code></pre></div>
+<p>If the variance is smaller than what you've seen before or this is the first variance you've seen, set the mean of this subwindow as the final mean and update the minimum variance seen so far.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a><span class="co">// ...</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="dt">void</span> main() {</span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="dt">int</span> size = <span class="dt">int</span>(parameters.x);</span>
+<span id="cb29-5"><a href="#cb29-5"></a>  <span class="cf">if</span> (size &lt;= <span class="dv">0</span>) { fragColor = texture(colorTexture, texCoord); <span class="cf">return</span>; }</span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Back in <code>main</code>, set the <code>size</code> parameter. If the size is at or below zero, return the fragment unchanged.</p>
+<p align="center">
+<img src="https://i.imgur.com/iuLbLKO.gif" alt="Kuwahara Kernal" title="Kuwahara Kernal">
+</p>
+
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1"></a>  <span class="co">// ...</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="co">// Lower Left</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a></span>
+<span id="cb30-5"><a href="#cb30-5"></a>  findMean(-size, <span class="dv">0</span>, -size, <span class="dv">0</span>);</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a>  <span class="co">// Upper Right</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a></span>
+<span id="cb30-9"><a href="#cb30-9"></a>  findMean(<span class="dv">0</span>, size, <span class="dv">0</span>, size);</span>
+<span id="cb30-10"><a href="#cb30-10"></a></span>
+<span id="cb30-11"><a href="#cb30-11"></a>  <span class="co">// Upper Left</span></span>
+<span id="cb30-12"><a href="#cb30-12"></a></span>
+<span id="cb30-13"><a href="#cb30-13"></a>  findMean(-size, <span class="dv">0</span>, <span class="dv">0</span>, size);</span>
+<span id="cb30-14"><a href="#cb30-14"></a></span>
+<span id="cb30-15"><a href="#cb30-15"></a>  <span class="co">// Lower Right</span></span>
+<span id="cb30-16"><a href="#cb30-16"></a></span>
+<span id="cb30-17"><a href="#cb30-17"></a>  findMean(<span class="dv">0</span>, size, -size, <span class="dv">0</span>);</span>
+<span id="cb30-18"><a href="#cb30-18"></a></span>
+<span id="cb30-19"><a href="#cb30-19"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>As stated above, the Kuwahara filter works by computing the variance of four subwindows and then using the mean of the subwindow with the lowest variance as the final fragment color. Note that the four subwindows overlap each other.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a>  <span class="co">// ...</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  mean.a    = <span class="dv">1</span>;</span>
+<span id="cb31-4"><a href="#cb31-4"></a>  fragColor = mean;</span>
+<span id="cb31-5"><a href="#cb31-5"></a></span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>After computing the variance and mean for each subwindow, set the fragment color to the mean of the subwindow with the lowest variance.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/position.frag" target="_blank" rel="noopener noreferrer">position.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/box-blur.frag" target="_blank" rel="noopener noreferrer">box-blur.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/median-filter.frag" target="_blank" rel="noopener noreferrer">median-filter.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/kuwahara-filter.frag" target="_blank" rel="noopener noreferrer">kuwahara-filter.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="fog.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="bloom.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

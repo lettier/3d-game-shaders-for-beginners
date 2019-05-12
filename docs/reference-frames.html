@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Reference Frames | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Reference Frames | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Reference Frames | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="running-the-demo.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="glsl.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="reference-frames">Reference Frames</h2>
+<p>Before you write any shaders, you should be familiar with the following frames of reference or coordinate systems. All of them boil down to what origin <code>(0, 0, 0)</code> are these coordinates currently relative to? Once you know that, you can then transform them, via some matrix, to some other vector space if need be. Typically, when the output of some shader looks wrong, it's because of some coordinate system mix up.</p>
+<h3 id="model">Model</h3>
+<p align="center">
+<img src="https://i.imgur.com/8xptajU.gif" alt="Model Space" title="Model Space">
+</p>
+
+<p>The model or object coordinate system is relative to the origin of the model. This is typically set to the center of the model's geometry in a modeling program like Blender.</p>
+<h3 id="world">World</h3>
+<p align="center">
+<img src="https://i.imgur.com/fHl4ohX.gif" alt="World Space" title="World Space">
+</p>
+
+<p>The world space is relative to the origin of the scene/level/universe that you've created.</p>
+<h3 id="view">View</h3>
+<p align="center">
+<img src="https://i.imgur.com/3b4SGGH.gif" alt="View Space" title="View Space">
+</p>
+
+<p>The view or eye coordinate space is relative to the position of the active camera.</p>
+<h3 id="clip">Clip</h3>
+<p align="center">
+<img src="https://i.imgur.com/iSEWS9Y.png" alt="Clip Space" title="Clip Space">
+</p>
+
+<p>The clip space is relative to the center of the camera's film. All coordinates are now homogeneous, ranging from negative one to one <code>(-1, 1)</code>. X and y are parallel with the camera's film and the z coordinate is the depth.</p>
+<p align="center">
+<img src="https://i.imgur.com/MhgmOLv.gif" alt="Frustum" title="Frustum">
+</p>
+
+<p>Any vertex not within the bounds of the camera's frustum or view volume is clipped or discarded. You can see this happening with the cube towards the back, clipped by the camera's far plane, and the cube off to the side.</p>
+<h3 id="screen">Screen</h3>
+<p align="center">
+<img src="https://i.imgur.com/bHHrjOl.png" alt="Screen Space" title="Screen Space">
+</p>
+
+<p>The screen space is (typically) relative to the lower left corner of the screen. X goes from zero to the screen width. Y goes from zero to the screen height.</p>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="running-the-demo.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="glsl.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>
