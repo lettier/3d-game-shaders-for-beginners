@@ -1,0 +1,8 @@
+images/**
+blends/**
+*.kra~
+*.png~
+main.o
+main
+3d-game-shaders-for-beginners.o
+3d-game-shaders-for-beginners
