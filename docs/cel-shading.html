@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Cel Shading | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Cel Shading | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Cel Shading | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="rim-lighting.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="normal-mapping.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="cel-shading">Cel Shading</h2>
+<p align="center">
+<img src="https://i.imgur.com/W80Ke1y.gif" alt="Cel Shaded" title="Cel Shaded">
+</p>
+
+<p>Cel shading is a technique to make 3D objects look 2D or flat. In 2D, you can make an object look 3D by applying a smooth gradient. However, with cel shading, you're breaking up the gradients into abrupt transitions. Typically there is only one transition where the shading goes from fully lit to fully shadowed. When combined with <a href="outlining.html">outlining</a>, cel shading can really sell the 2D cartoon look.</p>
+<h2 id="diffuse">Diffuse</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a>    <span class="co">// ...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="dt">float</span> diffuseIntensity = max(dot(normal, unitLightDirection), <span class="fl">0.0</span>);</span>
+<span id="cb1-4"><a href="#cb1-4"></a>          diffuseIntensity = step(<span class="fl">0.1</span>, diffuseIntensity);</span>
+<span id="cb1-5"><a href="#cb1-5"></a></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Revisiting the <a href="lighting.html#diffuse">lighting</a> model, modify the <code>diffuseIntensity</code> such that it is either zero or one.</p>
+<p align="center">
+<img src="https://i.imgur.com/lyLweFc.png" alt="Step Function" title="Step Function">
+</p>
+
+<p>The <code>step</code> function returns zero if the input is less than the edge and one otherwise.</p>
+<p align="center">
+<img src="https://i.imgur.com/EI6QJ60.png" alt="Steps Function" title="Steps Function">
+</p>
+
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a>  <span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="cf">if</span>      (diffuseIntensity &gt;= <span class="fl">0.8</span>) { diffuseIntensity = <span class="fl">1.0</span>; }</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="cf">else</span> <span class="cf">if</span> (diffuseIntensity &gt;= <span class="fl">0.6</span>) { diffuseIntensity = <span class="fl">0.6</span>; }</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="cf">else</span> <span class="cf">if</span> (diffuseIntensity &gt;= <span class="fl">0.3</span>) { diffuseIntensity = <span class="fl">0.3</span>; }</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="cf">else</span>                              { diffuseIntensity = <span class="fl">0.0</span>; }</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>If you would like to have a few steps or transitions, you can perform something like the above.</p>
+<p align="center">
+<img src="https://i.imgur.com/7KK65mi.png" alt="Step Texture" title="Step Texture">
+</p>
+
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  diffuseIntensity = texture(steps, vec2(diffuseIntensity, <span class="fl">0.0</span>)).r;</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Another approach is to put your step values into a texture with the transitions going from darker to lighter. Using the <code>diffuseIntensity</code> as a U coordinate, it will automatically transform itself.</p>
+<h2 id="specular">Specular</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2"></a>      <span class="co">// ...</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>      <span class="dt">float</span> specularIntensity = clamp(dot(normal, halfwayDirection), <span class="fl">0.0</span>, <span class="fl">1.0</span>);</span>
+<span id="cb4-5"><a href="#cb4-5"></a>            specularIntensity = step(<span class="fl">0.98</span>, specularIntensity);</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>      <span class="co">// ...</span></span></code></pre></div>
+<p>Using the <code>step</code> function again, set the <code>specularIntensity</code> to be either zero or one. You can also use one of the other approaches described up above for the specular highlight as well. After you've altered the <code>specularIntensity</code>, the rest of the lighting calculations are the same.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/base.vert" target="_blank" rel="noopener noreferrer">base.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/base.frag" target="_blank" rel="noopener noreferrer">base.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2020 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="rim-lighting.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="normal-mapping.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Screen Space Reflection | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Screen Space Reflection | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Screen Space Reflection | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="motion-blur.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="screen-space-refraction.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="screen-space-reflection-ssr">Screen Space Reflection (SSR)</h2>
+<p align="center">
+<img src="https://i.imgur.com/AYG4tvg.gif" alt="Screen Space Reflections" title="Screen Space Reflections">
+</p>
+
+<p>Adding reflections can really ground your scene. Wet and shiny objects spring to life as nothing makes something look wet or shiny quite like reflections. With reflections, you can really sell the illusion of water and metallic objects.</p>
+<p>In the <a href="lighting.html">lighting</a> section, you simulated the reflected, mirror-like image of the light source. This was the process of rendering the specular reflection. Recall that the specular light was computed using the reflected light direction. Similarly, using screen space reflection or SSR, you can simulate the reflection of other objects in the scene instead of just the light source. Instead of the light ray coming from the source and bouncing off into the camera, the light ray comes from some object in the scene and bounces off into the camera.</p>
+<p>SSR works by reflecting the screen image onto itself using only itself. Compare this to cube mapping which uses six screens or textures. In cube mapping, you reflect a ray from some point in your scene to some point on the inside of a cube surrounding your scene. In SSR, you reflect a ray from some point on your screen to some other point on your screen. By reflecting your screen onto itself, you can create the illusion of reflection. This illusion holds for the most part but SSR does fail in some cases as you'll see.</p>
+<h3 id="ray-marching">Ray Marching</h3>
+<p>Screen space reflection uses a technique known as ray marching to determine the reflection for each fragment. Ray marching is the process of iteratively extending or contracting the length or magnitude of some vector in order to probe or sample some space for information. The ray in screen space reflection is the position vector reflected about the normal.</p>
+<p>Intuitively, a light ray hits some point in the scene, bounces off, travels in the opposite direction of the reflected position vector, bounces off the current fragment, travels in the opposite direction of the position vector, and hits the camera lens allowing you to see the color of some point in the scene reflected in the current fragment. SSR is the process of tracing the light ray's path in reverse. It tries to find the reflected point the light ray bounced off of and hit the current fragment. With each iteration, the algorithm samples the scene's positions or depths, along the reflection ray, asking each time if the ray intersected with the scene's geometry. If there is an intersection, that position in the scene is a potential candidate for being reflected by the current fragment.</p>
+<p>Ideally there would be some analytical method for determining the first intersection point exactly. This first intersection point is the only valid point to reflect in the current fragment. Instead, this method is more like a game of battleship. You can't see the intersections (if there are any) so you start at the base of the reflection ray and call out coordinates as you travel in the direction of the reflection. With each call, you get back an answer of whether or not you hit something. If you do hit something, you try points around that area hoping to find the exact point of intersection.</p>
+<p align="center">
+<img src="https://i.imgur.com/wnAC7NI.gif" alt="SSR Ray Marching" title="SSR Ray Marching">
+</p>
+
+<p>Here you see ray marching being used to calculate each fragment's reflected point. The vertex normal is the bright green arrow, the position vector is the bright blue arrow, and the bright red vector is the reflection ray marching through view space.</p>
+<h3 id="vertex-positions">Vertex Positions</h3>
+<p>Like SSAO, you'll need the vertex positions in view space. Referrer back to <a href="ssao.html#vertex-positions">SSAO</a> for details.</p>
+<h3 id="vertex-normals">Vertex Normals</h3>
+<p>To compute the reflections, you'll need the vertex normals in view space. Referrer back to <a href="ssao.html#vertex-normals">SSAO</a> for details.</p>
+<p align="center">
+<img src="https://i.imgur.com/1cE2vBY.gif" alt="SSR using normal maps." title="SSR using normal maps.">
+</p>
+
+<p>Here you see SSR using the normal mapped normals instead of the vertex normals. Notice how the reflection follows the ripples in the water versus the more mirror like reflection shown earlier.</p>
+<p>To use the normal maps instead, you'll need to transform the normal mapped normals from tangent space to view space just like you did in the lighting calculations. You can see this being done in <a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/normal.frag" target="_blank" rel="noopener noreferrer">normal.frag</a>.</p>
+<h3 id="position-transformations">Position Transformations</h3>
+<p align="center">
+<img src="https://i.imgur.com/Qnsvkc0.gif" alt="Position Transformations" title="Position Transformations">
+</p>
+
+<p>Just like <a href="ssao.html">SSAO</a>, SSR goes back and forth between the screen and view space. You'll need the camera lens' projection matrix to transform points in view space to clip space. From clip space, you'll have to transform the points again to UV space. Once in UV space, you can sample a vertex/fragment position from the scene which will be the closest position in the scene to your sample. This is the <em>screen space</em> part in <em>screen space reflection</em> since the "screen" is a texture UV mapped over a screen shaped rectangle.</p>
+<h3 id="reflected-uv-coordinates">Reflected UV Coordinates</h3>
+<p>There are a few ways you can implement SSR. The example code starts the reflection process by computing a reflected UV coordinate for each screen fragment. You could skip this part and go straight to computing the reflected color instead, using the final rendering of the scene.</p>
+<p>Recall that UV coordinates range from zero to one for both U and V. The screen is just a 2D texture UV mapped over a screen-sized rectangle. Knowing this, the example code doesn't actually need the final rendering of the scene to compute the reflections. It can instead calculate what UV coordinate each screen pixel will eventually use. These calculated UV coordinates can be saved to a framebuffer texture and used later when the scene has been rendered.</p>
+<p align="center">
+<img src="https://i.imgur.com/pkQcGkD.gif" alt="Reflected UVs" title="Reflected UVs">
+</p>
+
+<p>Here you see the reflected UV coordinates. Without even rendering the scene yet, you can get a good feel for what the reflections will look like.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">//...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>uniform mat4 lensProjection;</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>uniform sampler2D positionTexture;</span>
+<span id="cb1-6"><a href="#cb1-6"></a>uniform sampler2D normalTexture;</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co">//...</span></span></code></pre></div>
+<p>You'll need the camera lens' projection matrix as well as the interpolated vertex positions and normals in view space.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a>  <span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="dt">float</span> maxDistance = <span class="dv">15</span>;</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="dt">float</span> resolution  = <span class="fl">0.3</span>;</span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="dt">int</span>   steps       = <span class="dv">10</span>;</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  <span class="dt">float</span> thickness   = <span class="fl">0.5</span>;</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Like the other effects, SSR has a few parameters you can adjust. Depending on the complexity of the scene, it may take you awhile to find the right settings. Getting screen space reflections to look just right tends to be difficult when reflecting complex geometry.</p>
+<p>The <code>maxDistance</code> parameter controls how far a fragment can reflect. In other words, it controls the maximum length or magnitude of the reflection ray.</p>
+<p>The <code>resolution</code> parameter controls how many fragments are skipped while traveling or marching the reflection ray during the first pass. This first pass is to find a point along the ray's direction where the ray enters or goes behind some geometry in the scene. Think of this first pass as the rough pass. Note that the <code>resolution</code> ranges from zero to one. Zero will result in no reflections while one will travel fragment-by-fragment along the ray's direction. A <code>resolution</code> of one can slow down your FPS considerably especially with a large <code>maxDistance</code>.</p>
+<p>The <code>steps</code> parameter controls how many iterations occur during the second pass. This second pass is to find the exact point along the reflection ray's direction where the ray immediately hits or intersects with some geometry in the scene. Think of this second pass as the refinement pass.</p>
+<p>The <code>thickness</code> controls the cutoff between what counts as a possible reflection hit and what does not. Ideally, you'd like to have the ray immediately stop at some camera-captured position or depth in the scene. This would be the exact point where the light ray bounced off, hit your current fragment, and then bounced off into the camera. Unfortunately the calculations are not always that precise so <code>thickness</code> provides some wiggle room or tolerance. You'll want the thickness to be as small as possible—just a short distance beyond a sampled position or depth.</p>
+<p align="center">
+<img src="https://i.imgur.com/W163Mfw.png" alt="Larger Thickness" title="Larger Thickness">
+</p>
+
+<p>You'll find that as the thickness gets larger, the reflections tend to smear in places.</p>
+<p align="center">
+<img src="https://i.imgur.com/T6uH4Yu.png" alt="Smaller Thickness" title="Smaller Thickness">
+</p>
+
+<p>Going in the other direction, as the thickness gets smaller, the reflections become noisy with tiny little holes and narrow gaps.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  vec2 texSize  = textureSize(positionTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  vec2 texCoord = gl_FragCoord.xy / texSize;</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  vec4 positionFrom     = texture(positionTexture, texCoord);</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  vec3 unitPositionFrom = normalize(positionFrom.xyz);</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  vec3 normal           = normalize(texture(normalTexture, texCoord).xyz);</span>
+<span id="cb3-9"><a href="#cb3-9"></a>  vec3 pivot            = normalize(reflect(unitPositionFrom, normal));</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Gather the current fragment's position, normal, and reflection about the normal. <code>positionFrom</code> is a vector from the camera position to the current fragment position. <code>normal</code> is a vector pointing in the direction of the interpolated vertex normal for the current fragment. <code>pivot</code> is the reflection ray or vector pointing in the reflected direction of the <code>positionFrom</code> vector. It currently has a length or magnitude of one.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>  <span class="co">// ...</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  vec4 startView = vec4(positionFrom.xyz + (pivot *           <span class="dv">0</span>), <span class="dv">1</span>);</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  vec4 endView   = vec4(positionFrom.xyz + (pivot * maxDistance), <span class="dv">1</span>);</span>
+<span id="cb4-5"><a href="#cb4-5"></a></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate the start and end point of the reflection ray in view space.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>  <span class="co">// ...</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  vec4 startFrag      = startView;</span>
+<span id="cb5-4"><a href="#cb5-4"></a>       <span class="co">// Project to screen space.</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>       startFrag      = lensProjection * startFrag;</span>
+<span id="cb5-6"><a href="#cb5-6"></a>       <span class="co">// Perform the perspective divide.</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>       startFrag.xyz /= startFrag.w;</span>
+<span id="cb5-8"><a href="#cb5-8"></a>       <span class="co">// Convert the screen-space XY coordinates to UV coordinates.</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>       startFrag.xy   = startFrag.xy * <span class="fl">0.5</span> + <span class="fl">0.5</span>;</span>
+<span id="cb5-10"><a href="#cb5-10"></a>       <span class="co">// Convert the UV coordinates to fragment/pixel coordnates.</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>       startFrag.xy  *= texSize;</span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a>  vec4 endFrag      = endView;</span>
+<span id="cb5-14"><a href="#cb5-14"></a>       endFrag      = lensProjection * endFrag;</span>
+<span id="cb5-15"><a href="#cb5-15"></a>       endFrag.xyz /= endFrag.w;</span>
+<span id="cb5-16"><a href="#cb5-16"></a>       endFrag.xy   = endFrag.xy * <span class="fl">0.5</span> + <span class="fl">0.5</span>;</span>
+<span id="cb5-17"><a href="#cb5-17"></a>       endFrag.xy  *= texSize;</span>
+<span id="cb5-18"><a href="#cb5-18"></a></span>
+<span id="cb5-19"><a href="#cb5-19"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Project or transform these start and end points from view space to screen space. These points are now fragment positions which correspond to pixel positions on the screen. Now that you know where the ray starts and ends on the screen, you can travel or march along its direction in screen space. Think of the ray as a line drawn on the screen. You'll travel along this line using it to sample the fragment positions stored in the position framebuffer texture.</p>
+<p align="center">
+<img src="https://i.imgur.com/MpBR225.png" alt="Screen space versus view space." title="Screen space versus view space.">
+</p>
+
+<p>Note that you could march the ray through view space but this may under or over sample scene positions found in the position framebuffer texture. Recall that the position framebuffer texture is the size and shape of the screen. Every screen fragment or pixel corresponds to some position captured by the camera. A reflection ray may travel a long distance in view space, but in screen space, it may only travel through a few pixels. You can only sample the screen's pixels for positions so it is inefficient to potentially sample the same pixels over and over again while marching in view space. By marching in screen space, you'll more efficiently sample the fragments or pixels the ray actually occupies or covers.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>  <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  vec2 frag  = startFrag.xy;</span>
+<span id="cb6-4"><a href="#cb6-4"></a>       uv.xy = frag / texSize;</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The first pass will begin at the starting fragment position of the reflection ray. Convert the fragment position to a UV coordinate by dividing the fragment's coordinates by the position texture's dimensions.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">// ...</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="dt">float</span> deltaX    = endFrag.x - startFrag.x;</span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">float</span> deltaY    = endFrag.y - startFrag.y;</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate the delta or difference between the X and Y coordinates of the end and start fragments. This will be how many pixels the ray line occupies in the X and Y dimension of the screen.</p>
+<p align="center">
+<img src="https://i.imgur.com/Um4dzgL.png" alt="The reflection ray in screen space." title="The reflection ray in screen space.">
+</p>
+
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a>  <span class="co">// ...</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="dt">float</span> useX      = abs(deltaX) &gt;= abs(deltaY) ? <span class="dv">1</span> : <span class="dv">0</span>;</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="dt">float</span> delta     = mix(abs(deltaY), abs(deltaX), useX) * clamp(resolution, <span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To handle all of the various different ways (vertical, horizontal, diagonal, etc.) the line can be oriented, you'll need to keep track of and use the larger difference. The larger difference will help you determine how much to travel in the X and Y direction each iteration, how many iterations are needed to travel the entire line, and what percentage of the line does the current position represent.</p>
+<p><code>useX</code> is either one or zero. It is used to pick the X or Y dimension depending on which delta is bigger. <code>delta</code> is the larger delta of the two X and Y deltas. It is used to determine how much to march in either dimension each iteration and how many iterations to take during the first pass.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  vec2  increment = vec2(deltaX, deltaY) / max(delta, <span class="fl">0.001</span>);</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate how much to increment the X and Y position by using the larger of the two deltas. If the two deltas are the same, each will increment by one each iteration. If one delta is larger than the other, the larger delta will increment by one while the smaller one will increment by less than one. This assumes the <code>resolution</code> is one. If the resolution is less than one, the algorithm will skip over fragments.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>startFrag  = ( <span class="dv">1</span>,  <span class="dv">4</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>endFrag    = (<span class="dv">10</span>, <span class="dv">14</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a></span>
+<span id="cb10-4"><a href="#cb10-4"></a>deltaX     = (<span class="dv">10</span> - <span class="dv">1</span>) = <span class="dv">9</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>deltaY     = (<span class="dv">14</span> - <span class="dv">4</span>) = <span class="dv">10</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a>resolution = <span class="fl">0.5</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a>delta      = <span class="dv">10</span> * <span class="fl">0.5</span> = <span class="dv">5</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11"></a>increment  = (deltaX, deltaY) / delta</span>
+<span id="cb10-12"><a href="#cb10-12"></a>           = (     <span class="dv">9</span>,     <span class="dv">10</span>) / <span class="dv">5</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>           = ( <span class="dv">9</span> / <span class="dv">5</span>,      <span class="dv">2</span>)</span></code></pre></div>
+<p>For example, say the <code>resolution</code> is 0.5. The larger dimension will increment by two fragments instead of one.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a>  <span class="co">// ...</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="dt">float</span> search0 = <span class="dv">0</span>;</span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="dt">float</span> search1 = <span class="dv">0</span>;</span>
+<span id="cb11-5"><a href="#cb11-5"></a></span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>To move from the start fragment to the end fragment, the algorithm uses linear interpolation.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a>current position x = (start x) * (<span class="dv">1</span> - search1) + (end x) * search1;</span>
+<span id="cb12-2"><a href="#cb12-2"></a>current position y = (start y) * (<span class="dv">1</span> - search1) + (end y) * search1;</span></code></pre></div>
+<p><code>search1</code> ranges from zero to one. When <code>search1</code> is zero, the current position is the start fragment. When <code>search1</code> is one, the current position is the end fragment. For any other value, the current position is somewhere between the start and end fragment.</p>
+<p><code>search0</code> is used to remember the last position on the line where the ray missed or didn't intersect with any geometry. The algorithm will later use <code>search0</code> in the second pass to help refine the point at which the ray touches the scene's geometry.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a>  <span class="co">// ...</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="dt">int</span> hit0 = <span class="dv">0</span>;</span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="dt">int</span> hit1 = <span class="dv">0</span>;</span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p><code>hit0</code> indicates there was an intersection during the first pass. <code>hit1</code> indicates there was an intersection during the second pass.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a>  <span class="co">// ...</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="dt">float</span> viewDistance = startView.y;</span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="dt">float</span> depth        = thickness;</span>
+<span id="cb14-5"><a href="#cb14-5"></a></span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>viewDistance</code> value is how far away from the camera the current point on the ray is. Recall that for Panda3D, the Y dimension goes in and out of the screen in view space. For other systems, the Z dimension goes in and out of the screen in view space. In any case, <code>viewDistance</code> is how far away from the camera the ray currently is. Note that if you use the depth buffer, instead of the vertex positions in view space, the <code>viewDistance</code> would be the Z depth.</p>
+<p>Make sure not to confuse the <code>viewDistance</code> value with the Y dimension of the line being traveled across the screen. The <code>viewDistance</code> goes from the camera into scene while the Y dimension of the line travels up or down the screen.</p>
+<p>The <code>depth</code> is the view distance difference between the current ray point and scene position. It tells you how far behind or in front of the scene the ray currently is. Remember that the scene positions are the interpolated vertex positions stored in the position framebuffer texture.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1"></a>  <span class="co">// ...</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; <span class="dt">int</span>(delta); ++i) {</span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>You can now begin the first pass. The first pass runs while <code>i</code> is less than the <code>delta</code> value. When <code>i</code> reaches <code>delta</code>, the algorithm has traveled the entire length of the line. Remember that <code>delta</code> is the larger of the two X and Y deltas.</p>
+<p align="center">
+<img src="https://i.imgur.com/Qnsvkc0.gif" alt="Screen Space Transformations" title="Screen Space Transformations">
+</p>
+
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a>    <span class="co">// ...</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>    frag      += increment;</span>
+<span id="cb16-4"><a href="#cb16-4"></a>    uv.xy      = frag / texSize;</span>
+<span id="cb16-5"><a href="#cb16-5"></a>    positionTo = texture(positionTexture, uv.xy);</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Advance the current fragment position closer to the end fragment. Use this new fragment position to look up a scene position stored in the position framebuffer texture.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb17-1"><a href="#cb17-1"></a>    <span class="co">// ...</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>    search1 =</span>
+<span id="cb17-4"><a href="#cb17-4"></a>      mix</span>
+<span id="cb17-5"><a href="#cb17-5"></a>        ( (frag.y - startFrag.y) / deltaY</span>
+<span id="cb17-6"><a href="#cb17-6"></a>        , (frag.x - startFrag.x) / deltaX</span>
+<span id="cb17-7"><a href="#cb17-7"></a>        , useX</span>
+<span id="cb17-8"><a href="#cb17-8"></a>        );</span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate the percentage or portion of the line the current fragment represents. If <code>useX</code> is zero, use the Y dimension of the line. If <code>useX</code> is one, use the X dimension of the line.</p>
+<p>When <code>frag</code> equals <code>startFrag</code>, <code>search1</code> equals zero since <code>frag - startFrag</code> is zero. When <code>frag</code> equals <code>endFrag</code>, <code>search1</code> is one since <code>frag - startFrag</code> equals <code>delta</code>.</p>
+<p><code>search1</code> is the percentage or portion of the line the current position represents. You'll need this to interpolate between the ray's view-space start and end distances from the camera.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb18-1"><a href="#cb18-1"></a>    <span class="co">// ...</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a>    viewDistance = (startView.y * endView.y) / mix(endView.y, startView.y, search1);</span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Using <code>search1</code>, interpolate the view distance (distance from the camera in view space) for the current position you're at on the reflection ray.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">// Incorrect.</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>viewDistance = mix(startView.y, endView.y, search1);</span>
+<span id="cb19-3"><a href="#cb19-3"></a></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="co">// Correct.</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>viewDistance = (startView.y * endView.y) / mix(endView.y, startView.y, search1);</span></code></pre></div>
+<p>You may be tempted to just interpolate between the view distances of the start and end view-space positions but this will give you the wrong view distance for the current position on the reflection ray. Instead, you'll need to perform <a href="https://www.comp.nus.edu.sg/~lowkl/publications/lowk_persp_interp_techrep.pdf">perspective-correct interpolation</a> which you see here.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb20-1"><a href="#cb20-1"></a>    <span class="co">// ...</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>    depth        = viewDistance - positionTo.y;</span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate the difference between the ray's view distance at this point and the sampled view distance of the scene at this point.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb21-1"><a href="#cb21-1"></a>    <span class="co">// ...</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a></span>
+<span id="cb21-3"><a href="#cb21-3"></a>    <span class="cf">if</span> (depth &gt; <span class="dv">0</span> &amp;&amp; depth &lt; thickness) {</span>
+<span id="cb21-4"><a href="#cb21-4"></a>      hit0 = <span class="dv">1</span>;</span>
+<span id="cb21-5"><a href="#cb21-5"></a>      <span class="cf">break</span>;</span>
+<span id="cb21-6"><a href="#cb21-6"></a>    } <span class="cf">else</span> {</span>
+<span id="cb21-7"><a href="#cb21-7"></a>      search0 = search1;</span>
+<span id="cb21-8"><a href="#cb21-8"></a>    }</span>
+<span id="cb21-9"><a href="#cb21-9"></a></span>
+<span id="cb21-10"><a href="#cb21-10"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>If the difference is between zero and the thickness, this is a hit. Set <code>hit0</code> to one and exit the first pass. If the difference is not between zero and the thickness, this is a miss. Set <code>search0</code> to equal <code>search1</code> to remember this position as the last known miss. Continue marching the ray towards the end fragment.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb22-1"><a href="#cb22-1"></a>  <span class="co">// ...</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  search1 = search0 + ((search1 - search0) / <span class="dv">2</span>);</span>
+<span id="cb22-4"><a href="#cb22-4"></a></span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>At this point you have finished the first pass. Set the <code>search1</code> position to be halfway between the position of the last miss and the position of the last hit.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb23-1"><a href="#cb23-1"></a>  <span class="co">// ...</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a></span>
+<span id="cb23-3"><a href="#cb23-3"></a>  steps *= hit0;</span>
+<span id="cb23-4"><a href="#cb23-4"></a></span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="cf">for</span> (i = <span class="dv">0</span>; i &lt; steps; ++i) {</span>
+<span id="cb23-6"><a href="#cb23-6"></a></span>
+<span id="cb23-7"><a href="#cb23-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>You can now begin the second pass. If the reflection ray didn't hit anything in the first pass, skip the second pass.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb24-1"><a href="#cb24-1"></a>    <span class="co">// ...</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a>    frag       = mix(startFrag.xy, endFrag.xy, search1);</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    uv.xy      = frag / texSize;</span>
+<span id="cb24-5"><a href="#cb24-5"></a>    positionTo = texture(positionTexture, uv.xy);</span>
+<span id="cb24-6"><a href="#cb24-6"></a></span>
+<span id="cb24-7"><a href="#cb24-7"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>As you did in the first pass, use the current position on the ray line to sample a position from the scene.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb25-1"><a href="#cb25-1"></a>    <span class="co">// ...</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>    viewDistance = (startView.y * endView.y) / mix(endView.y, startView.y, search1);</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    depth        = viewDistance - positionTo.y;</span>
+<span id="cb25-5"><a href="#cb25-5"></a></span>
+<span id="cb25-6"><a href="#cb25-6"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Interpolate the view distance for the current ray line position and calculate the camera distance difference between the ray at this point and the scene.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb26-1"><a href="#cb26-1"></a>    <span class="co">// ...</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="cf">if</span> (depth &gt; <span class="dv">0</span> &amp;&amp; depth &lt; thickness) {</span>
+<span id="cb26-4"><a href="#cb26-4"></a>      hit1 = <span class="dv">1</span>;</span>
+<span id="cb26-5"><a href="#cb26-5"></a>      search1 = search0 + ((search1 - search0) / <span class="dv">2</span>);</span>
+<span id="cb26-6"><a href="#cb26-6"></a>    } <span class="cf">else</span> {</span>
+<span id="cb26-7"><a href="#cb26-7"></a>      <span class="dt">float</span> temp = search1;</span>
+<span id="cb26-8"><a href="#cb26-8"></a>      search1 = search1 + ((search1 - search0) / <span class="dv">2</span>);</span>
+<span id="cb26-9"><a href="#cb26-9"></a>      search0 = temp;</span>
+<span id="cb26-10"><a href="#cb26-10"></a>    }</span>
+<span id="cb26-11"><a href="#cb26-11"></a></span>
+<span id="cb26-12"><a href="#cb26-12"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>If the depth is within bounds, this is a hit. Set <code>hit1</code> to one and set <code>search1</code> to be halfway between the last known miss position and this current hit position. If the depth is not within bounds, this is a miss. Set <code>search1</code> to be halfway between this current miss position and the last known hit position. Move <code>search0</code> to this current miss position. Continue this back and forth search while <code>i</code> is less than <code>steps</code>.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb27-1"><a href="#cb27-1"></a>  <span class="co">// ...</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="dt">float</span> visibility =</span>
+<span id="cb27-4"><a href="#cb27-4"></a>      hit1</span>
+<span id="cb27-5"><a href="#cb27-5"></a></span>
+<span id="cb27-6"><a href="#cb27-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>You're now done with the second and final pass but before you can output the reflected UV coordinates, you'll need to calculate the <code>visibility</code> of the reflection. The <code>visibility</code> ranges from zero to one. If there wasn't a hit in the second pass, the <code>visibility</code> is zero.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb28-1"><a href="#cb28-1"></a>  <span class="co">// ...</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a>    * positionTo.w</span>
+<span id="cb28-4"><a href="#cb28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>If the reflected scene position's alpha or <code>w</code> component is zero, the <code>visibility</code> is zero. Note that if <code>w</code> is zero, there was no scene position at that point.</p>
+<p align="center">
+<img src="https://i.imgur.com/7e2cOdZ.gif" alt="Reflection ray pointing towards the camera position." title="Reflection ray pointing towards the camera position.">
+</p>
+
+<div class="sourceCode" id="cb29"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb29-1"><a href="#cb29-1"></a>  <span class="co">// ...</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a>    * ( <span class="dv">1</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a>      - max</span>
+<span id="cb29-5"><a href="#cb29-5"></a>         ( dot(-unitPositionFrom, pivot)</span>
+<span id="cb29-6"><a href="#cb29-6"></a>         , <span class="dv">0</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a>         )</span>
+<span id="cb29-8"><a href="#cb29-8"></a>      )</span>
+<span id="cb29-9"><a href="#cb29-9"></a></span>
+<span id="cb29-10"><a href="#cb29-10"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>One of the ways in which screen space reflection can fail is when the reflection ray points in the general direction of the camera. If the reflection ray points towards the camera and hits something, it's most likely hitting the back side of something facing away from the camera.</p>
+<p>To handle this failure case, you'll need to gradually fade out the reflection based on how much the reflection vector points to the camera's position. If the reflection vector points directly in the opposite direction of the position vector, the visibility is zero. Any other direction results in the visibility being greater than zero.</p>
+<p>Remember to normalize both vectors when taking the dot product. <code>unitPositionFrom</code> is the normalized position vector. It has a length or magnitude of one.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb30-1"><a href="#cb30-1"></a>  <span class="co">// ...</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a>    * ( <span class="dv">1</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>      - clamp</span>
+<span id="cb30-5"><a href="#cb30-5"></a>          ( depth / thickness</span>
+<span id="cb30-6"><a href="#cb30-6"></a>          , <span class="dv">0</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>          , <span class="dv">1</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a>          )</span>
+<span id="cb30-9"><a href="#cb30-9"></a>      )</span>
+<span id="cb30-10"><a href="#cb30-10"></a></span>
+<span id="cb30-11"><a href="#cb30-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>As you sample scene positions along the reflection ray, you're hoping to find the exact point where the reflection ray first intersects with the scene's geometry. Unfortunately, you may not find this particular point. Fade out the reflection the further it is from the intersection point you did find.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb31-1"><a href="#cb31-1"></a>  <span class="co">// ...</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a></span>
+<span id="cb31-3"><a href="#cb31-3"></a>    * ( <span class="dv">1</span></span>
+<span id="cb31-4"><a href="#cb31-4"></a>      - clamp</span>
+<span id="cb31-5"><a href="#cb31-5"></a>          (   length(positionTo - positionFrom)</span>
+<span id="cb31-6"><a href="#cb31-6"></a>            / maxDistance</span>
+<span id="cb31-7"><a href="#cb31-7"></a>          , <span class="dv">0</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>          , <span class="dv">1</span></span>
+<span id="cb31-9"><a href="#cb31-9"></a>          )</span>
+<span id="cb31-10"><a href="#cb31-10"></a>      )</span>
+<span id="cb31-11"><a href="#cb31-11"></a></span>
+<span id="cb31-12"><a href="#cb31-12"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Fade out the reflection based on how far way the reflected point is from the initial starting point. This will fade out the reflection instead of it ending abruptly as it reaches <code>maxDistance</code>.</p>
+<p align="center">
+<img src="https://i.imgur.com/i0btBna.gif" alt="Reflection ray exiting the frustum." title="Reflection ray exiting the frustum.">
+</p>
+
+<div class="sourceCode" id="cb32"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb32-1"><a href="#cb32-1"></a>  <span class="co">// ...</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a>    * (uv.x &lt; <span class="dv">0</span> || uv.x &gt; <span class="dv">1</span> ? <span class="dv">0</span> : <span class="dv">1</span>)</span>
+<span id="cb32-4"><a href="#cb32-4"></a>    * (uv.y &lt; <span class="dv">0</span> || uv.y &gt; <span class="dv">1</span> ? <span class="dv">0</span> : <span class="dv">1</span>);</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>If the reflected UV coordinates are out of bounds, set the <code>visibility</code> to zero. This occurs when the reflection ray travels outside the camera's frustum.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb33-1"><a href="#cb33-1"></a>  visibility = clamp(visibility, <span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb33-2"><a href="#cb33-2"></a></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  uv.ba = vec2(visibility);</span></code></pre></div>
+<p>Set the blue and alpha component to the visibility as the UV coordinates only need the RG or XY components of the final vector.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb34-1"><a href="#cb34-1"></a>  <span class="co">// ...</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a>  fragColor = uv;</span>
+<span id="cb34-4"><a href="#cb34-4"></a></span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The final fragment color is the reflected UV coordinates and the visibility.</p>
+<h3 id="specular-map">Specular Map</h3>
+<p align="center">
+<img src="https://i.imgur.com/iuFYVWB.gif" alt="Specular Map" title="Specular Map">
+</p>
+
+<p>In addition to the reflected UV coordinates, you'll also need a specular map. The example code creates one using the fragment's material specular properties.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb35-1"><a href="#cb35-1"></a><span class="co">// ...</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a></span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="pp">#define MAX_SHININESS 127.75</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a></span>
+<span id="cb35-5"><a href="#cb35-5"></a>uniform <span class="kw">struct</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>  { vec3 specular</span>
+<span id="cb35-7"><a href="#cb35-7"></a>  ; <span class="dt">float</span> shininess</span>
+<span id="cb35-8"><a href="#cb35-8"></a>  ;</span>
+<span id="cb35-9"><a href="#cb35-9"></a>  } p3d_Material;</span>
+<span id="cb35-10"><a href="#cb35-10"></a></span>
+<span id="cb35-11"><a href="#cb35-11"></a>out vec4 fragColor;</span>
+<span id="cb35-12"><a href="#cb35-12"></a></span>
+<span id="cb35-13"><a href="#cb35-13"></a><span class="dt">void</span> main() {</span>
+<span id="cb35-14"><a href="#cb35-14"></a>  fragColor =</span>
+<span id="cb35-15"><a href="#cb35-15"></a>    vec4</span>
+<span id="cb35-16"><a href="#cb35-16"></a>      ( p3d_Material.specular</span>
+<span id="cb35-17"><a href="#cb35-17"></a>      , clamp(p3d_Material.shininess / MAX_SHININESS, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb35-18"><a href="#cb35-18"></a>      );</span>
+<span id="cb35-19"><a href="#cb35-19"></a>}</span></code></pre></div>
+<p>The specular fragment shader is quite simple. Using the fragment's material, the shader outputs the specular color and uses the alpha channel for the shininess. The shininess is mapped to a range of zero to one. In Blender, the maximum specular hardness or shininess is 511. When exporting from Blender to Panda3D, 511 is exported as 127.75. Feel free to adjust the shininess to range of zero to one however you see fit for your particular stack.</p>
+<p>The example code generates a specular map from the material specular properties but you could create one in GIMP, for example, and attach that as a texture to your 3D model. For instance, say your 3D treasure chest has shiny brackets on it but nothing else should reflect the environment. You can paint the brackets some shade of gray and the rest of the treasure chest black. This will mask off the brackets, allowing your shader to render the reflections on only the brackets and nothing else.</p>
+<h3 id="scene-colors">Scene Colors</h3>
+<p align="center">
+<img src="https://i.imgur.com/diBSxPI.png" alt="Scene Colors" title="Scene Colors">
+</p>
+
+<p>You'll need to render the parts of the scene you wish to reflect and store this in a framebuffer texture. This is typically just the scene without any reflections.</p>
+<h3 id="reflected-scene-colors">Reflected Scene Colors</h3>
+<p align="center">
+<img src="https://i.imgur.com/UPvgfDU.gif" alt="Reflected Scene Colors" title="Reflected Scene Colors">
+</p>
+
+<p>Here you see the reflected colors saved to a framebuffer texture.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb36-1"><a href="#cb36-1"></a><span class="co">// ...</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a>uniform sampler2D uvTexture;</span>
+<span id="cb36-4"><a href="#cb36-4"></a>uniform sampler2D colorTexture;</span>
+<span id="cb36-5"><a href="#cb36-5"></a></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Once you have the reflected UV coordinates, looking up the reflected colors is fairly easy. You'll need the reflected UV coordinates texture and the color texture containing the colors you wish to reflect.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb37-1"><a href="#cb37-1"></a>  <span class="co">// ...</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  vec2 texSize  = textureSize(uvTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb37-4"><a href="#cb37-4"></a>  vec2 texCoord = gl_FragCoord.xy / texSize;</span>
+<span id="cb37-5"><a href="#cb37-5"></a></span>
+<span id="cb37-6"><a href="#cb37-6"></a>  vec4 uv    = texture(uvTexture,    texCoord);</span>
+<span id="cb37-7"><a href="#cb37-7"></a>  vec4 color = texture(colorTexture, uv.xy);</span>
+<span id="cb37-8"><a href="#cb37-8"></a></span>
+<span id="cb37-9"><a href="#cb37-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Using the UV coordinates for the current fragment, look up the reflected color.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb38-1"><a href="#cb38-1"></a>  <span class="co">// ...</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="dt">float</span> alpha = clamp(uv.b, <span class="dv">0</span>, <span class="dv">1</span>);</span>
+<span id="cb38-4"><a href="#cb38-4"></a></span>
+<span id="cb38-5"><a href="#cb38-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Recall that the reflected UV texture stored the visibility in the B or blue component. This is the alpha channel for the reflected colors framebuffer texture.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb39-1"><a href="#cb39-1"></a>  <span class="co">// ...</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a></span>
+<span id="cb39-3"><a href="#cb39-3"></a>  fragColor = vec4(mix(vec3(<span class="dv">0</span>), color.rgb, alpha), alpha);</span>
+<span id="cb39-4"><a href="#cb39-4"></a></span>
+<span id="cb39-5"><a href="#cb39-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The fragment color is a mix between no reflection and the reflected color based on the visibility. The visibility was computed during the reflected UV coordinates step.</p>
+<h3 id="blurred-reflected-scene-colors">Blurred Reflected Scene Colors</h3>
+<p align="center">
+<img src="https://i.imgur.com/gVvx1Ei.png" alt="Blurred Reflected Scene Colors" title="Blurred Reflected Scene Colors">
+</p>
+
+<p>Now blur the reflected scene colors and store this in a framebuffer texture. The blurring is done using a box blur. Refer to the <a href="ssao.html#blurring">SSAO blurring</a> step for details.</p>
+<p>The blurred reflected colors are used for surfaces that have a less than mirror like finish. These surfaces have tiny little hills and valleys that tend to diffuse or blur the reflection. I'll cover this more during the roughness calculation.</p>
+<h3 id="reflections">Reflections</h3>
+<div class="sourceCode" id="cb40"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb40-1"><a href="#cb40-1"></a><span class="co">// ...</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a>uniform sampler2D colorTexture;</span>
+<span id="cb40-4"><a href="#cb40-4"></a>uniform sampler2D colorBlurTexture;</span>
+<span id="cb40-5"><a href="#cb40-5"></a>uniform sampler2D specularTexture;</span>
+<span id="cb40-6"><a href="#cb40-6"></a></span>
+<span id="cb40-7"><a href="#cb40-7"></a><span class="co">// ...</span></span></code></pre></div>
+<p>To generate the final reflections, you'll need the three framebuffer textures computed earlier. You'll need the reflected colors, the blurred reflected colors, and the specular map.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb41-1"><a href="#cb41-1"></a>  <span class="co">// ...</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a>  vec4 specular  = texture(specularTexture,  texCoord);</span>
+<span id="cb41-4"><a href="#cb41-4"></a>  vec4 color     = texture(colorTexture,     texCoord);</span>
+<span id="cb41-5"><a href="#cb41-5"></a>  vec4 colorBlur = texture(colorBlurTexture, texCoord);</span>
+<span id="cb41-6"><a href="#cb41-6"></a></span>
+<span id="cb41-7"><a href="#cb41-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Look up the specular amount and shininess, the reflected scene color, and the blurred reflected scene color.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb42-1"><a href="#cb42-1"></a>  <span class="co">// ...</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a>  <span class="dt">float</span> specularAmount = dot(specular.rgb, vec3(<span class="dv">1</span>)) / <span class="dv">3</span>;</span>
+<span id="cb42-4"><a href="#cb42-4"></a></span>
+<span id="cb42-5"><a href="#cb42-5"></a>  <span class="cf">if</span> (specularAmount &lt;= <span class="dv">0</span>) { fragColor = vec4(<span class="dv">0</span>); <span class="cf">return</span>; }</span>
+<span id="cb42-6"><a href="#cb42-6"></a></span>
+<span id="cb42-7"><a href="#cb42-7"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Map the specular color to a greyscale value. If the specular amount is none, set the frag color to nothing and return.</p>
+<p>Later on, you'll multiply the final reflection color by the specular amount. Multiplying by the specular amount allows you to control how much a material reflects its environment simply by brightening or darkening the greyscale value in the specular map.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb43-1"><a href="#cb43-1"></a>  dot(specular.rgb, vec3(<span class="dv">1</span>)) == (specular.r + specular.g + specular.b);</span></code></pre></div>
+<p>Using the dot product to produce the greyscale value is just a short way of summing the three color components.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb44-1"><a href="#cb44-1"></a>  <span class="co">// ...</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a></span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="dt">float</span> roughness = <span class="dv">1</span> - min(specular.a, <span class="dv">1</span>);</span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate the roughness based on the shininess value set during the specular map step. Recall that the shininess value was saved in the alpha channel of the specular map. The shininess determined how spread out or blurred the specular reflection was. Similarly, the <code>roughness</code> determines how blurred the reflection is. A roughness of one will produce the blurred reflection color. A roughness of zero will produce the non-blurred reflection color. Doing it this way allows you to control how blurred the reflection is just by changing the material's shininess value.</p>
+<p>The example code generates a roughness map from the material specular properties but you could create one in GIMP, for example, and attach that as a texture to your 3D model. For instance, say you have a tiled floor that has polished tiles and scratched up tiles. The polished tiles could be painted a more translucent white while the scratched up tiles could be painted a more opaque white. The more translucent/transparent the greyscale value, the more the shader will use the blurred reflected color. The scratched tiles will have a blurry reflection while the polished tiles will have a mirror like reflection.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb45-1"><a href="#cb45-1"></a>  <span class="co">// ...</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  fragColor = mix(color, colorBlur, roughness) * specularAmount;</span>
+<span id="cb45-4"><a href="#cb45-4"></a></span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Mix the reflected color and blurred reflected color based on the roughness. Multiply that vector by the specular amount and then set that value as the fragment color.</p>
+<p>The reflection color is a mix between the reflected scene color and the blurred reflected scene color based on the roughness. A high roughness will produce a blurry reflection meaning the surface is rough. A low roughness will produce a clear reflection meaning the surface is smooth.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/base.vert" target="_blank" rel="noopener noreferrer">base.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/position.frag" target="_blank" rel="noopener noreferrer">position.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/normal.frag" target="_blank" rel="noopener noreferrer">normal.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/material-specular.frag" target="_blank" rel="noopener noreferrer">material-specular.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/screen-space-reflection.frag" target="_blank" rel="noopener noreferrer">screen-space-reflection.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/reflection-color.frag" target="_blank" rel="noopener noreferrer">reflection-color.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/reflection.frag" target="_blank" rel="noopener noreferrer">reflection.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/box-blur.frag" target="_blank" rel="noopener noreferrer">box-blur.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/base-combine.frag" target="_blank" rel="noopener noreferrer">base-combine.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="motion-blur.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="screen-space-refraction.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Render To Texture | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Render To Texture | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Render To Texture | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="glsl.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="texturing.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="render-to-texture">Render To Texture</h2>
+<p>Instead of rendering/drawing/painting directly to the screen, the example code uses a technique called "render to texture". In order to render to a texture, you'll need to set up a framebuffer and bind a texture to it. Multiple textures can be bound to a single framebuffer.</p>
+<p>The textures bound to the framebuffer hold the vector(s) returned by the fragment shader. Typically these vectors are color vectors <code>(r, g, b, a)</code> but they could also be position or normal vectors <code>(x, y, z, w)</code>. For each bound texture, the fragment shader can output a different vector. For example you could output a vertex's position and normal in a single pass.</p>
+<p>Most of the example code dealing with Panda3D involves setting up <a href="https://www.panda3d.org/manual/?title=Render-to-Texture_and_Image_Postprocessing">framebuffer textures</a>. To keep things straightforward, nearly all of the fragment shaders in the example code have only one output. However, you'll want to output as much as you can each render pass to keep your frames per second (FPS) high.</p>
+<p>There are two framebuffer texture setups found in the example code.</p>
+<p align="center">
+<img src="https://i.imgur.com/t3iLKhx.gif" alt="The first framebuffer texture setup." title="The first framebuffer texture setup.">
+</p>
+
+<p>The first setup renders the mill scene into a framebuffer texture using a variety of vertex and fragment shaders. This setup will go through each of the mill scene's vertexes and corresponding fragments.</p>
+<p>In this setup, the example code performs the following.</p>
+<ul>
+<li>Stores geometry data (like vertex position or normal) for later use.</li>
+<li>Stores material data (like the diffuse color) for later use.</li>
+<li>UV maps the various textures (diffuse, normal, shadow, etc.).</li>
+<li>Calculates the ambient, diffuse, specular, and emission lighting.</li>
+</ul>
+<p align="center">
+<img src="https://i.imgur.com/o8H6cTy.png" alt="The second framebuffer texture setup." title="The second framebuffer texture setup.">
+</p>
+
+<p>The second setup is an orthographic camera pointed at a screen-shaped rectangle. This setup will go through just the four vertexes and their corresponding fragments.</p>
+<p>In this second setup, the example code performs the following.</p>
+<ul>
+<li>Manipulates the output of another framebuffer texture.</li>
+<li>Combines various framebuffer textures into one.</li>
+</ul>
+<p>I like to think of this second setup as using layers in GIMP, Krita, or Inkscape.</p>
+<p align="center">
+<img src="https://i.imgur.com/L6Hwuxa.gif" alt="Tabbing Through Framebuffer Textures" title="Tabbing Through Framebuffer Textures">
+</p>
+
+<p>In the example code, you can see the output of a particular framebuffer texture by using the <kbd>Tab</kbd> key or the <kbd>Shift</kbd>+<kbd>Tab</kbd> keys.</p>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="glsl.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="texturing.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

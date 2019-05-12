@@ -1,0 +1,9 @@
+images/**
+blends/**
+*.kra~
+*.png~
+*main.o*
+*3d-game-shaders-for-beginners.o*
+*3d-game-shaders-for-beginners*
+!blends/*
+!blends/mill-scene/mill-scene-low-poly-backup.blend

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Outlining | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Outlining | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Outlining | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="flow-mapping.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="depth-of-field.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="outlining">Outlining</h2>
+<p align="center">
+<img src="https://i.imgur.com/EKaZRkR.gif" alt="Outlined Scene" title="Outlined Scene">
+</p>
+
+<p>Outlining your scene's geometry can give your game a distinctive look, reminiscent of comic books and cartoons.</p>
+<h3 id="discontinuities">Discontinuities</h3>
+<p>The process of outlining is the process of finding and labeling discontinuities or differences. Every time you find what you consider a significant difference, you mark it with your line color. As you go about labeling or coloring in the differences, outlines or edges will start to form.</p>
+<p>Where you choose to search for the discontinuities is up to you. It could be the diffuse colors in your scene, the normals of your models, the depth buffer, or some other scene related data.</p>
+<p>The demo uses the interpolated vertex positions to render the outlines. However, a less straightforward but more typical way is to use both the scene's normals and depth buffer values to construct the outlines.</p>
+<h3 id="vertex-positions">Vertex Positions</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// ...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>uniform sampler2D positionTexture;</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Like SSAO, you'll need the vertex positions in view space. Referrer back to <a href="ssao.html#vertex-positions">SSAO</a> for details.</p>
+<h3 id="scene-colors">Scene Colors</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>uniform sampler2D colorTexture;</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">// ...</span></span></code></pre></div>
+<p>The demo darkens the colors of the scene where there's an outline. This tends to look nicer than a constant color since it provides some color variation to the edges.</p>
+<h3 id="parameters">Parameters</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>  <span class="dt">float</span> minSeparation = <span class="fl">1.0</span>;</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="dt">float</span> maxSeparation = <span class="fl">3.0</span>;</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">float</span> minDistance   = <span class="fl">0.5</span>;</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="dt">float</span> maxDistance   = <span class="fl">2.0</span>;</span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="dt">int</span>   size          = <span class="dv">1</span>;</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  vec3 colorModifier  = vec3(<span class="fl">0.324</span>, <span class="fl">0.063</span>, <span class="fl">0.099</span>);</span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The min and max separation parameters control the thickness of the outline depending on the fragment's distance from the camera or depth. The min and max distance control the significance of any changes found. The <code>size</code> parameter controls the constant thickness of the line no matter the fragment's position. The outline color is based on <code>colorModifier</code> and the current fragment's color.</p>
+<h3 id="fragment-position">Fragment Position</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>  <span class="co">// ...</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  vec2 texSize   = textureSize(colorTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  vec2 fragCoord = gl_FragCoord.xy;</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  vec2 texCoord  = fragCoord / texSize;</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>  vec4 position = texture(positionTexture, texCoord);</span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Sample the position texture for the current fragment's position in the scene. Recall that the position texture is just a screen shaped quad making the UV coordinate the current fragment's screen coordinate divided by the dimensions of the screen.</p>
+<h3 id="fragment-depth">Fragment Depth</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>  <span class="co">// ...</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="dt">float</span> depth =</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    clamp</span>
+<span id="cb5-5"><a href="#cb5-5"></a>      (   <span class="fl">1.0</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>        - ( (far - position.y)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>          / (far - near)</span>
+<span id="cb5-8"><a href="#cb5-8"></a>        )</span>
+<span id="cb5-9"><a href="#cb5-9"></a>      , <span class="fl">0.0</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>      , <span class="fl">1.0</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>      );</span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a>  <span class="dt">float</span> separation = mix(maxSeparation, minSeparation, depth);</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The fragment's depth ranges from zero to one. When the fragment's view-space y coordinate matches the far clipping plane, the depth is one. When the fragment's view-space y coordinate matches the near clipping plane, the depth is zero. In other words, the depth ranges from zero at the near clipping plane all the way up to one at the far clipping plane.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>  <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">float</span> separation = mix(maxSeparation, minSeparation, depth);</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Converting the position to a depth value isn't necessary but it allows you to vary the thickness of the outline based on how far away the fragment is from the camera. Far away fragments get a thinner line while nearer fragments get a thicker outline. This tends to look nicer than a constant thickness since it gives depth to the outline.</p>
+<h3 id="finding-the-discontinuities">Finding The Discontinuities</h3>
+<p align="center">
+<img src="https://i.imgur.com/xAMRGhn.gif" alt="Edge Finding" title="Edge Finding">
+</p>
+
+<div class="sourceCode" id="cb7"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">// ...</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="dt">float</span> mx = <span class="fl">0.0</span>;</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="cf">for</span> (<span class="dt">int</span> i = -size; i &lt;= size; ++i) {</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="cf">for</span> (<span class="dt">int</span> j = -size; j &lt;= size; ++j) {</span>
+<span id="cb7-7"><a href="#cb7-7"></a>      <span class="co">// ...</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>    }</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  }</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Now that you have the current fragment's position, loop through an i by j grid or window surrounding the current fragment.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb8-1"><a href="#cb8-1"></a>      <span class="co">// ...</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a>      texCoord =</span>
+<span id="cb8-4"><a href="#cb8-4"></a>          ( fragCoord</span>
+<span id="cb8-5"><a href="#cb8-5"></a>          + (vec2(i, j) * separation)</span>
+<span id="cb8-6"><a href="#cb8-6"></a>          )</span>
+<span id="cb8-7"><a href="#cb8-7"></a>        / texSize;</span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a>      vec4 positionTemp =</span>
+<span id="cb8-10"><a href="#cb8-10"></a>        texture</span>
+<span id="cb8-11"><a href="#cb8-11"></a>          ( positionTexture</span>
+<span id="cb8-12"><a href="#cb8-12"></a>          , texCoord</span>
+<span id="cb8-13"><a href="#cb8-13"></a>          );</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a>      mx = max(mx, abs(position.y - positionTemp.y));</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a>      <span class="co">// ...</span></span></code></pre></div>
+<p>With each iteration, find the biggest distance between this fragment's and the surrounding fragments' positions.</p>
+<p align="center">
+<img src="https://i.imgur.com/idDZr62.png" alt="smoothstep" title="smoothstep">
+</p>
+
+<div class="sourceCode" id="cb9"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb9-1"><a href="#cb9-1"></a>  <span class="co">// ...</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="dt">float</span> diff = smoothstep(minDistance, maxDistance, mx);</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Calculate the significance of any difference discovered using the <code>minDistance</code>, <code>maxDistance</code>, and <code>smoothstep</code>. <code>smoothstep</code> returns values from zero to one. The <code>minDistance</code> is the left-most edge. Any difference less than the minimum distance will be zero. The <code>maxDistance</code> is the right-most edge. Any difference greater than the maximum distance will be one. For distances between the edges, the difference will be between zero and one. These values are interpolated along a s-shaped curve.</p>
+<h3 id="line-color">Line Color</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb10-1"><a href="#cb10-1"></a>  <span class="co">// ...</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  vec3 lineColor = texture(colorTexture, texCoord).rgb * colorModifier;</span>
+<span id="cb10-4"><a href="#cb10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The line color is the current fragment color either darkened or lightened.</p>
+<h3 id="fragment-color">Fragment Color</h3>
+<p align="center">
+<img src="https://i.imgur.com/yWNdPZe.gif" alt="Outlines" title="Outlines">
+</p>
+
+<div class="sourceCode" id="cb11"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb11-1"><a href="#cb11-1"></a>  <span class="co">// ...</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  fragColor.rgb = vec4(lineColor, diff);</span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The fragment's RGB color is the <code>lineColor</code> and its alpha channel is <code>diff</code>.</p>
+<h3 id="sketchy">Sketchy</h3>
+<p align="center">
+<img src="https://i.imgur.com/FRBkSm1.gif" alt="Sketchy Outline" title="Sketchy Outline">
+</p>
+
+<p>For a sketchy outline, you can distort the UV coordinates used to sample the position vectors.</p>
+<p align="center">
+<img src="https://i.imgur.com/qgZNtnN.png" alt="Outline Noise" title="Outline Noise">
+</p>
+
+<div class="sourceCode" id="cb12"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">// ...</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a>uniform sampler2D noiseTexture;</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="co">// ...</span></span></code></pre></div>
+<p>Start by creating a RGB noise texture. A good size is either 128 by 128 or 512 by 512. Be sure to blur it and make it tileable. This will produce a nice wavy, inky outline.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb13-1"><a href="#cb13-1"></a>  <span class="co">// ...</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="dt">float</span> noiseScale = <span class="fl">10.0</span>;</span>
+<span id="cb13-4"><a href="#cb13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>The <code>noiseScale</code> parameter controls how distorted the outline is. The bigger the <code>noiseScale</code>, the sketchier the line.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1"></a>  <span class="co">// ...</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  vec2 fragCoord = gl_FragCoord.xy;</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  vec2 noise  = texture(noiseTexture, fragCoord / textureSize(noiseTexture, <span class="dv">0</span>).xy).rb;</span>
+<span id="cb14-6"><a href="#cb14-6"></a>       noise  = noise * <span class="fl">2.0</span> - <span class="fl">1.0</span>;</span>
+<span id="cb14-7"><a href="#cb14-7"></a>       noise *= noiseScale;</span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Sample the noise texture using the current screen/fragment position and the size of the noise texture. Since you're distorting the UV coordinates used to sample the position vectors, you'll only need two of the three color channels. Map the two color channels from <code>[0, 1]</code> to <code>[-1, 1]</code>. Finally, scale the noise by the scale chosen earlier.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1"></a>  <span class="co">// ...</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  vec2 texSize  = textureSize(colorTexture, <span class="dv">0</span>).xy;</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  vec2 texCoord = (fragCoord - noise) / texSize;</span>
+<span id="cb15-5"><a href="#cb15-5"></a></span>
+<span id="cb15-6"><a href="#cb15-6"></a>  vec4 position = texture(positionTexture, texCoord);</span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>When sampling the current position, subtract the noise vector from the current fragment's coordinates.</p>
+<p align="center">
+<img src="https://i.imgur.com/wk43ybP.png" alt="Squiggly Outline" title="Squiggly Outline">
+</p>
+
+<p>You could instead add it to the current fragment's coordinates which will create more of a squiggly line that loosely follows the geometry.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb16-1"><a href="#cb16-1"></a>  <span class="co">// ...</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>      texCoord =</span>
+<span id="cb16-4"><a href="#cb16-4"></a>          (vec2(i, j) * separation + fragCoord + noise)</span>
+<span id="cb16-5"><a href="#cb16-5"></a>        / texSize;</span>
+<span id="cb16-6"><a href="#cb16-6"></a></span>
+<span id="cb16-7"><a href="#cb16-7"></a>      <span class="co">// ...</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a>      vec4 positionTemp =</span>
+<span id="cb16-10"><a href="#cb16-10"></a>        texture</span>
+<span id="cb16-11"><a href="#cb16-11"></a>          ( positionTexture</span>
+<span id="cb16-12"><a href="#cb16-12"></a>          , texCoord</span>
+<span id="cb16-13"><a href="#cb16-13"></a>          );</span>
+<span id="cb16-14"><a href="#cb16-14"></a></span>
+<span id="cb16-15"><a href="#cb16-15"></a>      <span class="co">// ...</span></span></code></pre></div>
+<p>When sampling the surrounding positions inside the loop, add the noise vector to the current fragment's coordinates. The rest of the calculations are the same.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/base.vert" target="_blank" rel="noopener noreferrer">base.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/basic.vert" target="_blank" rel="noopener noreferrer">basic.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/position.frag" target="_blank" rel="noopener noreferrer">position.frag</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/outline.frag" target="_blank" rel="noopener noreferrer">outline.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="flow-mapping.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="depth-of-field.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>

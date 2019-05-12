@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:title" content="Normal Mapping | 3D Game Shaders For Beginners" />
+    <meta property="og:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta property="og:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:title" content="Normal Mapping | 3D Game Shaders For Beginners" />
+    <meta name="twitter:description" content="Interested in adding textures, lighting, shadows, normal maps, glowing objects, ambient occlusion, reflections, refractions, and more to your 3D game? Great! 3D Game Shaders For Beginners is a collection of shading techniques that will take your game visuals to new heights." />
+    <meta name="twitter:image" content="https://i.imgur.com/JIDwVTm.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta name="author" content="David Lettier" />
+    <title>Normal Mapping | 3D Game Shaders For Beginners</title>
+    <style>
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+    </style>
+    <style>
+      code.sourceCode > span { display: inline-block; line-height: 1.25; }
+      code.sourceCode > span { color: inherit; text-decoration: inherit; }
+      code.sourceCode > span:empty { height: 1.2em; }
+      .sourceCode { overflow: visible; }
+      code.sourceCode { white-space: pre; position: relative; }
+      div.sourceCode { margin: 1em 0; }
+      pre.sourceCode { margin: 0; }
+      @media screen {
+      div.sourceCode { overflow: auto; }
+      }
+      @media print {
+      code.sourceCode { white-space: pre-wrap; }
+      code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+      }
+      pre.numberSource code
+        { counter-reset: source-line 0; }
+      pre.numberSource code > span
+        { position: relative; left: -4em; counter-increment: source-line; }
+      pre.numberSource code > span > a:first-child::before
+        { content: counter(source-line);
+          position: relative; left: -1em; text-align: right; vertical-align: baseline;
+          border: none; display: inline-block;
+          -webkit-touch-callout: none; -webkit-user-select: none;
+          -khtml-user-select: none; -moz-user-select: none;
+          -ms-user-select: none; user-select: none;
+          padding: 0 4px; width: 4em;
+          background-color: #232629;
+          color: #7a7c7d;
+        }
+      pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d;  padding-left: 4px; }
+      div.sourceCode
+        { color: #cfcfc2; background-color: #232629; }
+      @media screen {
+      code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+      }
+      code span. { color: #cfcfc2; } /* Normal */
+      code span.al { color: #95da4c; } /* Alert */
+      code span.an { color: #3f8058; } /* Annotation */
+      code span.at { color: #2980b9; } /* Attribute */
+      code span.bn { color: #f67400; } /* BaseN */
+      code span.bu { color: #7f8c8d; } /* BuiltIn */
+      code span.cf { color: #fdbc4b; } /* ControlFlow */
+      code span.ch { color: #3daee9; } /* Char */
+      code span.cn { color: #27aeae; } /* Constant */
+      code span.co { color: #7a7c7d; } /* Comment */
+      code span.cv { color: #7f8c8d; } /* CommentVar */
+      code span.do { color: #a43340; } /* Documentation */
+      code span.dt { color: #2980b9; } /* DataType */
+      code span.dv { color: #f67400; } /* DecVal */
+      code span.er { color: #da4453; } /* Error */
+      code span.ex { color: #0099ff; } /* Extension */
+      code span.fl { color: #f67400; } /* Float */
+      code span.fu { color: #8e44ad; } /* Function */
+      code span.im { color: #27ae60; } /* Import */
+      code span.in { color: #c45b00; } /* Information */
+      code span.kw { color: #cfcfc2; } /* Keyword */
+      code span.op { color: #cfcfc2; } /* Operator */
+      code span.ot { color: #27ae60; } /* Other */
+      code span.pp { color: #27ae60; } /* Preprocessor */
+      code span.re { color: #2980b9; } /* RegionMarker */
+      code span.sc { color: #3daee9; } /* SpecialChar */
+      code span.ss { color: #da4453; } /* SpecialString */
+      code span.st { color: #f44f4f; } /* String */
+      code span.va { color: #27aeae; } /* Variable */
+      code span.vs { color: #da4453; } /* VerbatimString */
+      code span.wa { color: #da4453; } /* Warning */
+    </style>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+<p><a href="cel-shading.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="deferred-rendering.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+<h1 id="3d-game-shaders-for-beginners">3D Game Shaders For Beginners</h1>
+<h2 id="normal-mapping">Normal Mapping</h2>
+<p align="center">
+<img src="https://i.imgur.com/M4eHo9I.gif" alt="Normal Mapping" title="Normal Mapping">
+</p>
+
+<p>Normal mapping allows you to add surface details without adding any geometry. Typically, in a modeling program like Blender, you create a high poly and a low poly version of your mesh. You take the vertex normals from the high poly mesh and bake them into a texture. This texture is the normal map. Then inside the fragment shader, you replace the low poly mesh's vertex normals with the high poly mesh's normals you baked into the normal map. Now when you light your mesh, it will appear to have more polygons than it really has. This will keep your FPS high while at the same time retain most of the details from the high poly version.</p>
+<p align="center">
+<img src="https://i.imgur.com/nSY9AW4.gif" alt="From high to low poly with normal mapping." title="From high to low poly with normal mapping.">
+</p>
+
+<p>Here you see the progression from the high poly model to the low poly model to the low poly model with the normal map applied.</p>
+<p align="center">
+<img src="https://i.imgur.com/jvkRPE7.gif" alt="Normal Map Illusion" title="Normal Map Illusion">
+</p>
+
+<p>Keep in mind though, normal mapping is only an illusion. After a certain angle, the surface will look flat again.</p>
+<h3 id="vertex">Vertex</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">// ...</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>uniform mat3 p3d_NormalMatrix;</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">// ...</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>in vec3 p3d_Normal;</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="co">// ...</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>in vec3 p3d_Binormal;</span>
+<span id="cb1-12"><a href="#cb1-12"></a>in vec3 p3d_Tangent;</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="co">// ...</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>  vertexNormal = normalize(p3d_NormalMatrix * p3d_Normal);</span>
+<span id="cb1-17"><a href="#cb1-17"></a>  binormal     = normalize(p3d_NormalMatrix * p3d_Binormal);</span>
+<span id="cb1-18"><a href="#cb1-18"></a>  tangent      = normalize(p3d_NormalMatrix * p3d_Tangent);</span>
+<span id="cb1-19"><a href="#cb1-19"></a></span>
+<span id="cb1-20"><a href="#cb1-20"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Starting in the vertex shader, you'll need to output to the fragment shader the normal vector, binormal vector, and the tangent vector. These vectors are used, in the fragment shader, to transform the normal map normal from tangent space to view space.</p>
+<p><code>p3d_NormalMatrix</code> transforms the vertex normal, binormal, and tangent vectors to view space. Remember that in view space, all of the coordinates are relative to the camera's position.</p>
+<blockquote>
+[p3d_NormalMatrix] is the upper 3x3 of the inverse transpose of the ModelViewMatrix.
+It is used to transform the normal vector into view-space coordinates.
+<br>
+<br>
+<footer>
+<a href="http://www.panda3d.org/manual/?title=List_of_GLSL_Shader_Inputs">Source</a>
+</footer>
+</blockquote>
+
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">// ...</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>in vec2 p3d_MultiTexCoord0;</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co">// ...</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a>out vec2 normalCoord;</span>
+<span id="cb2-8"><a href="#cb2-8"></a></span>
+<span id="cb2-9"><a href="#cb2-9"></a>  <span class="co">// ...</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a></span>
+<span id="cb2-11"><a href="#cb2-11"></a>  normalCoord   = p3d_MultiTexCoord0;</span>
+<span id="cb2-12"><a href="#cb2-12"></a></span>
+<span id="cb2-13"><a href="#cb2-13"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p align="center">
+<img src="https://i.imgur.com/tLIA6Hu.gif" alt="Normal Maps" title="Normal Maps">
+</p>
+
+<p>You'll also need to output, to the fragment shader, the UV coordinates for the normal map.</p>
+<h3 id="fragment">Fragment</h3>
+<p>Recall that the vertex normal was used to calculate the lighting. However, the normal map provides us with different normals to use when calculating the lighting. In the fragment shader, you need to swap out the vertex normals for the normals found in the normal map.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">// ...</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>uniform sampler2D p3d_Texture1;</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">// ...</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a></span>
+<span id="cb3-7"><a href="#cb3-7"></a>in vec2 normalCoord;</span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a>  <span class="co">// ...</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="co">/* Find */</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>  vec4 normalTex   = texture(p3d_Texture1, normalCoord);</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a>  <span class="co">// ...</span></span></code></pre></div>
+<p>Using the normal map coordinates the vertex shader sent, pull out the normal from the normal map.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1"></a>  <span class="co">// ...</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  vec3 normal;</span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a>    <span class="co">// ...</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>    <span class="co">/* Unpack */</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>    normal =</span>
+<span id="cb4-9"><a href="#cb4-9"></a>      normalize</span>
+<span id="cb4-10"><a href="#cb4-10"></a>        ( normalTex.rgb</span>
+<span id="cb4-11"><a href="#cb4-11"></a>        * <span class="fl">2.0</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>        - <span class="fl">1.0</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>        );</span>
+<span id="cb4-14"><a href="#cb4-14"></a></span>
+<span id="cb4-15"><a href="#cb4-15"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>Earlier I showed how the normals are mapped to colors to create the normal map. Now this process needs to be reversed so you can get back the original normals that were baked into the map.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1"></a>(r, g, b) =</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  ( r * <span class="dv">2</span> - <span class="dv">1</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  , g * <span class="dv">2</span> - <span class="dv">1</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  , b * <span class="dv">2</span> - <span class="dv">1</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  ) =</span>
+<span id="cb5-6"><a href="#cb5-6"></a>    (x, y, z)</span></code></pre></div>
+<p>Here's the process for unpacking the normals from the normal map.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1"></a>    <span class="co">// ...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="co">/* Transform */</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>    normal =</span>
+<span id="cb6-5"><a href="#cb6-5"></a>      normalize</span>
+<span id="cb6-6"><a href="#cb6-6"></a>        ( mat3</span>
+<span id="cb6-7"><a href="#cb6-7"></a>            ( tangent</span>
+<span id="cb6-8"><a href="#cb6-8"></a>            , binormal</span>
+<span id="cb6-9"><a href="#cb6-9"></a>            , vertexNormal</span>
+<span id="cb6-10"><a href="#cb6-10"></a>            )</span>
+<span id="cb6-11"><a href="#cb6-11"></a>        * normal</span>
+<span id="cb6-12"><a href="#cb6-12"></a>        );</span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="co">// ...</span></span></code></pre></div>
+<p>The normals you get back from the normal map are typically in tangent space. They could be in another space, however. For example, Blender allows you to bake the normals in tangent, object, world, or camera space.</p>
+<p align="center">
+<img src="https://i.imgur.com/EzHJPd4.gif" alt="Replacing the vertex normals with the normal map normals." title="Replacing the vertex normals with the normal map normals.">
+</p>
+
+<p>To take the normal map normal from tangent space to view pace, construct a three by three matrix using the tangent, binormal, and vertex normal vectors. Multiply the normal by this matrix and be sure to normalize it.</p>
+<p>At this point, you're done. The rest of the lighting calculations are the same.</p>
+<h3 id="source">Source</h3>
+<ul>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/src/main.cxx" target="_blank" rel="noopener noreferrer">main.cxx</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/vertex/base.vert" target="_blank" rel="noopener noreferrer">base.vert</a></li>
+<li><a href="https://github.com/lettier/3d-game-shaders-for-beginners/blob/master/demonstration/shaders/fragment/base.frag" target="_blank" rel="noopener noreferrer">base.frag</a></li>
+</ul>
+<h2 id="copyright">Copyright</h2>
+<p>(C) 2019 David Lettier <br> <a href="https://www.lettier.com">lettier.com</a></p>
+<p><a href="cel-shading.html"><span class="emoji" data-emoji="arrow_backward">◀️</span></a> <a href="index.html"><span class="emoji" data-emoji="arrow_double_up">⏫</span></a> <a href="#"><span class="emoji" data-emoji="arrow_up_small">🔼</span></a> <a href="#copyright"><span class="emoji" data-emoji="arrow_down_small">🔽</span></a> <a href="deferred-rendering.html"><span class="emoji" data-emoji="arrow_forward">▶️</span></a></p>
+  </body>
+</html>
