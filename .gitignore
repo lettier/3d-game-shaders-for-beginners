@@ -6,3 +6,9 @@ main.o
 main
 3d-game-shaders-for-beginners.o
 3d-game-shaders-for-beginners
+
+# Mac OS
+*.DS_Store
+
+# Build
+build/
