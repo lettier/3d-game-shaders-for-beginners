@@ -4,7 +4,13 @@
 */
 
 #include <thread>
+
+#ifdef _WIN32
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
+
 #include <random>
 #include <string>
 
