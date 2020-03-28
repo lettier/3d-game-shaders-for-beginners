@@ -14,6 +14,12 @@ Before you can try out the demo program, you'll have to build the example code f
 
 ### Dependencies
 
+#### Python 2.7
+
+Ensure your python version is 2.7.
+
+#### Panda3D
+
 Before you can compile the example code, you'll need to install
 [Panda3D](https://www.panda3d.org/)
 for your platform.
