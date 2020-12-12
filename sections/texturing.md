@@ -81,7 +81,7 @@ out vec2 fragColor;
 
 void main()
 {
-  vec2 texSize  = textureSize(texture, 0).xy;
+  vec2 texSize  = textureSize(screenSizedTexture, 0).xy;
   vec2 texCoord = gl_FragCoord.xy / texSize;
 
   texColor = texture(screenSizedTexture, texCoord);
