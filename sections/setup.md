@@ -108,6 +108,12 @@ This comes in handy when doing SSAO and other screen/window sized related techni
 is usually not a power of two.
 `textures-power-2 down` downsizes our textures to a power of two if the system only supports texture sizes being a power of two.
 
+### Other engine
+
+To make this tutorial easier to use with other engines,
+the Panda3D models are also exported to `.blend` and `.glb` files
+under [extra](../demonstration/extra/)
+
 ## Copyright
 
 (C) 2019 David Lettier
