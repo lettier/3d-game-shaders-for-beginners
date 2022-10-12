@@ -23,3 +23,4 @@ g++ \
   -lp3dtoolconfig \
   -lp3dtool \
   -lpthread
+git pull master asal
